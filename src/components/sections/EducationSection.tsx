@@ -19,9 +19,11 @@ export default function EducationSection() {
 
               {/* Mobile: Stacked layout */}
               <div className="md:hidden space-y-3 text-center">
-                <p className="text-small text-[var(--color-primary)]">
-                  {edu.startYear} - {edu.endYear}
-                </p>
+                {edu.startYear && edu.endYear && (
+                  <p className="text-small text-[var(--color-primary)]">
+                    {edu.startYear} - {edu.endYear}
+                  </p>
+                )}
                 <h3 className="text-large text-[var(--color-primary)]">
                   {edu.degree}
                 </h3>
@@ -35,9 +37,11 @@ export default function EducationSection() {
               <div className="hidden md:grid grid-cols-2 gap-6">
                 {/* Left: Title, Degree, Institution */}
                 <div className="text-right pr-8">
-                  <p className="text-small mb-2 text-[var(--color-primary)]">
-                    {edu.startYear} - {edu.endYear}
-                  </p>
+                  {edu.startYear && edu.endYear && (
+                    <p className="text-small mb-2 text-[var(--color-primary)]">
+                      {edu.startYear} - {edu.endYear}
+                    </p>
+                  )}
                   <h3 className="text-large mb-1 text-[var(--color-primary)]">
                     {edu.degree}
                   </h3>

@@ -18,231 +18,111 @@ import headshot from "@/assets/headshot.png";
 // ===== Portfolio Data =====
 
 export const personalInfo: PersonalInfo = {
-  name: "Elena Rossi",
-  title: "Creative Director & Brand Strategist",
-  location: { city: "Brooklyn, NY", country: "USA" },
-  website: "elenarossi.design",
-  email: "hello@elenarossi.design",
+  name: "[Your Name]",
+  title: "HR Business Partner | People Strategy & Performance Management",
+  location: { city: "[Your City]", country: "[Your Country]" },
+  website: "[yourwebsite.com]",
+  email: "[your.email@example.com]",
   avatar: headshot,
-  bio: "I'm a creative director who believes great brands tell stories that move people. With 12 years of experience leading creative teams at agencies and startups alike, I specialize in building brand identities that feel authentic, memorable, and distinctly human.\n\nMy approach blends strategic thinking with artistic intuition—I believe the best creative work happens when data and imagination dance together. I've had the privilege of shaping brand narratives for companies ranging from scrappy startups to Fortune 500 giants.\n\nWhen I'm not obsessing over typography or color palettes, you'll find me hosting creative workshops, mentoring emerging designers, or exploring vintage markets for inspiration. I'm passionate about making design accessible and believe everyone deserves to feel represented by the brands they love.",
-  skills: "Brand Strategy, Visual Identity, Creative Direction, Typography, Art Direction, Team Leadership, Design Systems, Storytelling, Campaign Development, Client Presentations, Adobe Creative Suite, Figma, Motion Design, Print Design",
+  bio: "HR Business Partner with 7.5+ years of experience building and scaling people systems across high-growth startups. Currently at Finbox, a high-growth digital lending fintech, driving performance management, OKR governance, competency frameworks, and employee relations for a 230+ employee span.\n\nExperienced in designing and operationalizing KPI-driven PMS, implementing HRMS platforms, and supporting organization-wide change management initiatives including ESOP communication and rollout support. Proven ability to partner with leadership on org design, performance architecture, and workforce effectiveness while translating people data into actionable organizational interventions.\n\nFluent in English, Hindi, and Malayalam; conversational in Gujarati.",
+  skills: "HR Strategy, Performance Management (OKRs and KPIs), HRIS (Keka, Zoho, PeopleCues), Employee Lifecycle Management, Policy Design and Compliance, Talent Acquisition, Compensation and Benefits Structuring, Employee Engagement and Experience, Change Management, Data-Driven HR (eNPS, People Analytics), HR Project Management, Remote Onboarding Optimization, ESOP Design and Rollout, Senior Leadership Partnership, Cross-Functional Collaboration, Stakeholder Communication, Conflict Resolution",
 };
 
 export const experience: Experience[] = [
   {
     id: "exp-1",
-    company: "Studio Lumière",
-    role: "Founder & Creative Director",
-    location: "Brooklyn, NY",
-    startDate: "2020-01",
+    company: "Finbox",
+    role: "HR Business Partner (HRBP)",
+    location: "[Location]",
+    startDate: "2026-01",
     endDate: null,
-    description: "Founded a boutique creative studio specializing in brand identity and campaign work for purpose-driven brands. Led a team of 8 designers and strategists, growing revenue by 200% in three years. Notable clients include Patagonia, Warby Parker, and Glossier. Developed signature 'Story-First' branding methodology now taught in workshops worldwide.",
+    description:
+      "Performance Management and OKR Governance: Led end-to-end PMS cycles on Keka and institutionalized quarterly OKR frameworks across teams, driving goal alignment, structured reviews, and improved performance accountability.\n\nHR Business Partnering and Span Leadership: Acted as HRBP for 230+ employees in a 370-member organization, partnering with leadership to drive people strategy, resolve organizational challenges, and enable data-backed decision-making.\n\nCompetency Framework and Career Architecture: Designed and implemented a comprehensive skill and competency matrix across functions, enabling structured career pathing, clearer role expectations, and targeted development planning.\n\nEmployee Engagement and Experience Optimization: Led employee connect initiatives and redesigned eNPS and onboarding feedback mechanisms, generating actionable insights to enhance engagement and improve onboarding effectiveness.\n\nManagerial Effectiveness and Coaching Enablement: Developed and deployed manager best-practice playbooks, strengthening coaching capabilities and improving the effectiveness of the managerial layer.",
     current: true,
   },
   {
     id: "exp-2",
-    company: "Mother New York",
-    role: "Associate Creative Director",
-    location: "New York, NY",
-    startDate: "2016-03",
-    endDate: "2019-12",
-    description: "Led creative direction for major brand campaigns including Target's holiday campaign and Stella Artois rebrand. Managed cross-functional teams of 15+ across design, copy, and production. Won 3 Cannes Lions and 2 D&AD Pencils. Mentored junior creatives and established internal design critique program.",
+    company: "Attri",
+    role: "HR Manager",
+    location: "[Location]",
+    startDate: "2025-01",
+    endDate: "2025-11",
+    description:
+      "Performance Management, HR Systems, and Automation: Redesigned PMS framework with measurable KPIs, co-developed an in-house performance management system using CursorAI, and automated key HR workflows including communications, reimbursements, asset tracking, and leave notifications to improve efficiency and tracking accuracy.\n\nHR Governance and Policy Architecture: Overhauled end-to-end HR documentation including offer and appointment letters, onboarding kits, appraisal and confirmation templates, exit and handover processes, and Employee Handbook, ensuring policy consistency and reduced operational risk.\n\nHR Tech Implementation and Process Digitization: Led deployment of Zoho People, automating leave, attendance, and core HR workflows, driving adoption and streamlining HR operations across the organization.\n\nEmployee Lifecycle Management and Relations: Designed structured probation review process improving clarity and time-to-productivity for new hires, mediated employee conflicts, and led group insurance rollout ensuring 100% coverage compliance and issue resolution.\n\nCompensation, Payroll, and Employee Experience: Managed payroll coordination and bonus cycles ensuring accuracy and timeliness, while conducting regular employee connect 1:1s and organizing engagement initiatives to strengthen morale and workplace culture.",
     current: false,
   },
   {
     id: "exp-3",
-    company: "Pentagram",
-    role: "Senior Designer",
-    location: "New York, NY",
-    startDate: "2013-06",
-    endDate: "2016-02",
-    description: "Collaborated with partners on brand identity projects for cultural institutions and tech companies. Key projects included identity systems for the Whitney Museum pop-up exhibition and Mastercard's sonic branding visual companion. Developed expertise in large-scale identity systems and brand guidelines.",
+    company: "Skillsbucket",
+    role: "OD Consultant (Part-time)",
+    location: "[Location]",
+    startDate: "2024-10",
+    endDate: "2024-12",
+    description:
+      "Managed end-to-end project of implementing KPI-based PMS on Zoho People for a 130+ member IT team.",
     current: false,
   },
   {
     id: "exp-4",
-    company: "Sagmeister & Walsh",
-    role: "Junior Designer",
-    location: "New York, NY",
-    startDate: "2011-09",
-    endDate: "2013-05",
-    description: "Cut my teeth in one of the world's most innovative design studios. Contributed to campaigns for Adobe, Levi's, and The New York Times. Learned the art of conceptual thinking and experimental typography. This experience shaped my belief that design should provoke emotion.",
+    company: "Eclat Engineering",
+    role: "Human Resource Business Partner (HRBP)",
+    location: "[Location]",
+    startDate: "2020-04",
+    endDate: "2024-08",
+    description:
+      "Headed the HR department, collaborating closely with senior leadership to design and implement comprehensive HR policies and practices for diverse global teams (APAC, Africa, LATAM).\n\nOwned end-to-end development and execution of HR programs covering recruitment, onboarding, retention, performance management, compensation, benefits, rewards, recognition, and employee engagement.\n\nRevamped and streamlined the remote onboarding process, significantly enhancing new hire experience and reducing time to full productivity.\n\nImplemented OKR tool (PeopleCues) to help track visibility and drive performance across the organization. Led the design, rollout, and communication of an OKR-based Performance Management System to improve goal alignment and performance clarity across teams.\n\nCrafted band-wise Competency matrix to facilitate Succession Planning and drive organization-wide learning.\n\nManaged major change initiatives including compensation restructuring and ESOP rollout to align incentives with business objectives and improve employee satisfaction.\n\nDeveloped and executed employee recognition initiatives aligned with company values, fostering a culture of appreciation and engagement.\n\nAnalyzed eNPS survey data and formulated actionable strategies that addressed key employee concerns, leading to measurable improvements in employee satisfaction.",
+    current: false,
+  },
+  {
+    id: "exp-5",
+    company: "Skillventory",
+    role: "Senior Consultant",
+    location: "[Location]",
+    startDate: "2018-08",
+    endDate: "2020-03",
+    description:
+      "Consulted leading Investment Banks (Morgan Stanley, Goldman Sachs, JP Morgan Chase, Wells Fargo), E-commerce giants, Gaming ventures, Product Firms, and Start-ups to find the right candidates.\n\nServed as the single point of contact for two of the Big Four consultancies to understand staffing requirements, manage resources, and strategize to ensure successful delivery.",
     current: false,
   },
 ];
 
-export const writing: Writing[] = [
-  {
-    id: "write-1",
-    title: "The Death of the Logo (And What Comes Next)",
-    publication: "It's Nice That",
-    date: "2024-02",
-    url: "https://example.com/article-1",
-    featured: true,
-  },
-  {
-    id: "write-2",
-    title: "Why Your Brand Voice Sounds Like Everyone Else's",
-    publication: "Eye Magazine",
-    date: "2023-09",
-    url: "https://example.com/article-2",
-    featured: false,
-  },
-  {
-    id: "write-3",
-    title: "Building Creative Teams That Actually Create",
-    publication: "Creative Review",
-    date: "2023-05",
-    url: "https://example.com/article-3",
-    featured: false,
-  },
-  {
-    id: "write-4",
-    title: "The Case for Imperfection in Brand Design",
-    publication: "AIGA Eye on Design",
-    date: "2023-01",
-    url: "https://example.com/article-4",
-    featured: false,
-  },
-  {
-    id: "write-5",
-    title: "How to Present Creative Work Without Losing Your Soul",
-    publication: "Communication Arts",
-    date: "2022-10",
-    url: "https://example.com/article-5",
-    featured: false,
-  },
-];
+export const writing: Writing[] = [];
 
-export const speaking: Speaking[] = [
-  {
-    id: "speak-1",
-    event: "AIGA Design Conference 2024",
-    date: "2024-10-18",
-    location: "Seattle, WA",
-    talk: "Story-First: A New Framework for Brand Building",
-    description: "A deep dive into developing brand narratives that resonate on an emotional level and stand the test of time.",
-    url: "https://example.com/talk-1",
-    slidesUrl: "https://example.com/slides-1",
-    upcoming: true,
-  },
-  {
-    id: "speak-2",
-    event: "Brand New Conference",
-    date: "2023-09-22",
-    location: "Austin, TX",
-    talk: "The Human Element: Why Authenticity Can't Be Designed",
-    description: "Exploring how brands can feel genuine in an age of AI-generated everything.",
-    url: "https://example.com/talk-2",
-    recordingUrl: "https://example.com/recording-2",
-    upcoming: false,
-  },
-  {
-    id: "speak-3",
-    event: "Creative Mornings NYC",
-    date: "2023-04-14",
-    location: "New York, NY",
-    talk: "Finding Your Creative Confidence",
-    description: "An intimate talk about overcoming imposter syndrome and trusting your creative instincts.",
-    url: "https://example.com/talk-3",
-    recordingUrl: "https://example.com/recording-3",
-    upcoming: false,
-  },
-  {
-    id: "speak-4",
-    event: "99U Conference",
-    date: "2022-06-08",
-    location: "New York, NY",
-    talk: "Leading Creative Teams Through Uncertainty",
-    description: "Practical strategies for maintaining creative excellence during challenging times.",
-    recordingUrl: "https://example.com/recording-4",
-    slidesUrl: "https://example.com/slides-4",
-    upcoming: false,
-  },
-];
+export const speaking: Speaking[] = [];
 
-export const projects: Project[] = [
-  {
-    id: "proj-1",
-    name: "Evergreen Collective",
-    description:
-      "Complete brand identity for a sustainable fashion marketplace. Created a living brand system that evolves seasonally while maintaining core identity principles.",
-    techStack: ["Brand Identity", "Art Direction", "Motion Design", "Guidelines"],
-    liveUrl: "https://evergreen.example.com",
-    status: "active",
-  },
-  {
-    id: "proj-2",
-    name: "Sonora Coffee Roasters",
-    description:
-      "Craft coffee brand identity inspired by desert landscapes. Developed packaging, retail experience, and digital presence for a chain of 12 locations.",
-    techStack: ["Visual Identity", "Packaging", "Environmental", "Digital"],
-    liveUrl: "https://sonora.example.com",
-    status: "active",
-  },
-  {
-    id: "proj-3",
-    name: "The Narrative Project",
-    description:
-      "A pro-bono initiative creating brand identities for nonprofit storytelling organizations. Helped 15+ orgs amplify their missions through better visual communication.",
-    techStack: ["Brand Strategy", "Identity Design", "Mentorship"],
-    liveUrl: "https://narrative.example.com",
-    githubUrl: "https://github.com/example/narrative",
-    status: "active",
-  },
-  {
-    id: "proj-4",
-    name: "Type Workshop Series",
-    description:
-      "Monthly typography workshops teaching designers to develop their own display typefaces. Over 500 designers have participated since 2021.",
-    techStack: ["Typography", "Education", "Community"],
-    liveUrl: "https://typeworkshop.example.com",
-    status: "active",
-  },
-];
+export const projects: Project[] = [];
 
 export const education: Education[] = [
   {
     id: "edu-1",
-    institution: "Rhode Island School of Design",
-    degree: "Master of Fine Arts",
-    field: "Graphic Design",
-    startYear: "2009",
-    endYear: "2011",
-    location: "Providence, RI",
-    details: "Thesis: 'Visual Language as Cultural Memory'",
+    institution: "Gujarat University",
+    degree: "Master of Science (MSc)",
+    field: "Human Resources / Organizational Development",
+    startYear: "2016",
+    endYear: "2018",
+    location: "Gujarat, India",
+    details: "",
   },
   {
     id: "edu-2",
-    institution: "Parsons School of Design",
-    degree: "Bachelor of Fine Arts",
-    field: "Communication Design",
-    startYear: "2005",
-    endYear: "2009",
-    location: "New York, NY",
-    details: "Graduated with Honors, Typography Award recipient",
+    institution: "Udemy",
+    degree: "Certification",
+    field: "People Analytics",
+    startYear: "",
+    endYear: "",
+    location: "Online",
+    details: "PEOPLE ANALYTICS 101: HR Analytics Fundamentals",
+  },
+  {
+    id: "edu-3",
+    institution: "LinkedIn Learning",
+    degree: "Certification",
+    field: "Business Intelligence",
+    startYear: "",
+    endYear: "",
+    location: "Online",
+    details: "Power BI Essential Training",
   },
 ];
 
-export const socialLinks: SocialLink[] = [
-  {
-    platform: "LinkedIn",
-    username: "elenarossi",
-    url: "https://linkedin.com/in/elenarossi",
-  },
-  {
-    platform: "Instagram",
-    username: "@elenarossi.design",
-    url: "https://instagram.com/elenarossi.design",
-  },
-  {
-    platform: "Dribbble",
-    username: "elenarossi",
-    url: "https://dribbble.com/elenarossi",
-  },
-  {
-    platform: "Twitter",
-    username: "@elenarossi",
-    url: "https://twitter.com/elenarossi",
-  },
-];
+export const socialLinks: SocialLink[] = [];

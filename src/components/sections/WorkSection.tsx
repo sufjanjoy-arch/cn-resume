@@ -35,9 +35,13 @@ export default function WorkSection() {
                     {job.role}
                   </h3>
                   <p className="text-body">{job.company}</p>
-                  <p className="text-body max-w-xl mx-auto">
-                    {job.description}
-                  </p>
+                  <div className="space-y-3 max-w-xl mx-auto">
+                    {job.description.split('\n\n').filter(Boolean).map((line, i) => (
+                      <p key={i} className="text-body">
+                        {line}
+                      </p>
+                    ))}
+                  </div>
                 </div>
 
                 {/* Desktop: Split layout */}
@@ -55,9 +59,13 @@ export default function WorkSection() {
 
                   {/* Right: Description */}
                   <div className="pl-8">
-                    <p className="text-body max-w-md">
-                      {job.description}
-                    </p>
+                    <div className="space-y-3 max-w-md">
+                      {job.description.split('\n\n').filter(Boolean).map((line, i) => (
+                        <p key={i} className="text-body">
+                          {line}
+                        </p>
+                      ))}
+                    </div>
                   </div>
                 </div>
               </div>
