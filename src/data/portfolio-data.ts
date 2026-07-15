@@ -131,9 +131,4 @@ export const socialLinks: SocialLink[] = [
     username: "chaitranair",
     url: "https://www.linkedin.com/in/chaitranair/",
   },
-  {
-    platform: "Email",
-    username: "chaitranair96@gmail.com",
-    url: "mailto:chaitranair96@gmail.com",
-  },
 ];

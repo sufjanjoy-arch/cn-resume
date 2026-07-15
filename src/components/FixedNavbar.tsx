@@ -1,9 +1,13 @@
 import { personalInfo } from "@/data/portfolio-data";
+import { socialLinks } from "@/data/portfolio-data";
 import { Mail, Linkedin, Github, Download } from "lucide-react";
 import { useState, useEffect } from "react";
 
 export default function FixedNavbar() {
   const [showPhoto, setShowPhoto] = useState(false);
+
+  const linkedIn = socialLinks.find((link) => link.platform === "LinkedIn");
+  const github = socialLinks.find((link) => link.platform === "GitHub");
 
   useEffect(() => {
     const heroPhoto = document.getElementById("hero-photo");
@@ -43,38 +47,34 @@ export default function FixedNavbar() {
         {/* Right: Contact buttons */}
         <div className="flex items-center h-[44px]">
           <a
-            href="/resume.pdf"
-            download
-            className="flex items-center justify-center w-[44px] h-[44px] hover:text-[var(--color-primary)] transition-colors"
-            aria-label="Download Resume"
-          >
-            <Download size={16} />
-          </a>
-          <a
             href={`mailto:${personalInfo.email}`}
             className="flex items-center justify-center w-[44px] h-[44px] hover:text-[var(--color-primary)] transition-colors"
             aria-label="Email"
           >
             <Mail size={16} />
           </a>
-          <a
-            href="https://linkedin.com/in/sarahmartinez"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center justify-center w-[44px] h-[44px] hover:text-[var(--color-primary)] transition-colors"
-            aria-label="LinkedIn"
-          >
-            <Linkedin size={16} />
-          </a>
-          <a
-            href="https://github.com/sarahmartinez"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center justify-center w-[44px] h-[44px] hover:text-[var(--color-primary)] transition-colors"
-            aria-label="GitHub"
-          >
-            <Github size={16} />
-          </a>
+          {linkedIn && (
+            <a
+              href={linkedIn.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-center w-[44px] h-[44px] hover:text-[var(--color-primary)] transition-colors"
+              aria-label="LinkedIn"
+            >
+              <Linkedin size={16} />
+            </a>
+          )}
+          {github && (
+            <a
+              href={github.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-center w-[44px] h-[44px] hover:text-[var(--color-primary)] transition-colors"
+              aria-label="GitHub"
+            >
+              <Github size={16} />
+            </a>
+          )}
         </div>
       </div>
     </nav>
