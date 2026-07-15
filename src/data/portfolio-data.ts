@@ -18,11 +18,11 @@ import headshot from "@/assets/headshot.png";
 // ===== Portfolio Data =====
 
 export const personalInfo: PersonalInfo = {
-  name: "[Your Name]",
+  name: "Chaitra Nair",
   title: "HR Business Partner | People Strategy & Performance Management",
-  location: { city: "[Your City]", country: "[Your Country]" },
-  website: "[yourwebsite.com]",
-  email: "[your.email@example.com]",
+  location: { city: "Bangalore", country: "India" },
+  website: "",
+  email: "chaitranair96@gmail.com",
   avatar: headshot,
   bio: "HR Business Partner with 7.5+ years of experience building and scaling people systems across high-growth startups. Currently at Finbox, a high-growth digital lending fintech, driving performance management, OKR governance, competency frameworks, and employee relations for a 230+ employee span.\n\nExperienced in designing and operationalizing KPI-driven PMS, implementing HRMS platforms, and supporting organization-wide change management initiatives including ESOP communication and rollout support. Proven ability to partner with leadership on org design, performance architecture, and workforce effectiveness while translating people data into actionable organizational interventions.\n\nFluent in English, Hindi, and Malayalam; conversational in Gujarati.",
   skills: "HR Strategy, Performance Management (OKRs and KPIs), HRIS (Keka, Zoho, PeopleCues), Employee Lifecycle Management, Policy Design and Compliance, Talent Acquisition, Compensation and Benefits Structuring, Employee Engagement and Experience, Change Management, Data-Driven HR (eNPS, People Analytics), HR Project Management, Remote Onboarding Optimization, ESOP Design and Rollout, Senior Leadership Partnership, Cross-Functional Collaboration, Stakeholder Communication, Conflict Resolution",
@@ -125,4 +125,10 @@ export const education: Education[] = [
   },
 ];
 
-export const socialLinks: SocialLink[] = [];
+export const socialLinks: SocialLink[] = [
+  {
+    platform: "LinkedIn",
+    username: "chaitranair",
+    url: "https://www.linkedin.com/in/chaitranair/",
+  },
+];
