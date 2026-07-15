@@ -45,7 +45,22 @@ export default function FixedNavbar() {
         </div>
 
         {/* Right: Contact buttons */}
-        <div className="flex items-center h-[44px]">
+        <div className="flex items-center h-[44px] print:hidden">
+          <button
+            onClick={() => window.print()}
+            className="hidden sm:flex items-center gap-1.5 h-[28px] px-3 mr-2 rounded-full border border-[var(--color-primary)] text-[var(--color-primary)] text-xs font-medium hover:bg-[var(--color-primary)] hover:text-[var(--color-primary-foreground)] transition-colors"
+            aria-label="Download résumé"
+          >
+            <Download size={13} />
+            <span>Résumé</span>
+          </button>
+          <button
+            onClick={() => window.print()}
+            className="sm:hidden flex items-center justify-center w-[44px] h-[44px] hover:text-[var(--color-primary)] transition-colors"
+            aria-label="Download résumé"
+          >
+            <Download size={16} />
+          </button>
           <a
             href={`mailto:${personalInfo.email}`}
             className="flex items-center justify-center w-[44px] h-[44px] hover:text-[var(--color-primary)] transition-colors"
