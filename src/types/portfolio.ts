@@ -14,6 +14,12 @@ export interface PersonalInfo {
   skills: string;
 }
 
+export interface ExperienceTool {
+  name: string;
+  logo: string;
+  color?: string;
+}
+
 export interface Experience {
   id: string;
   company: string;
@@ -24,6 +30,7 @@ export interface Experience {
   description: string;
   media?: string;
   current: boolean;
+  tools?: ExperienceTool[];
 }
 
 export interface Writing {
