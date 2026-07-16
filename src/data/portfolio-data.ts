@@ -39,6 +39,9 @@ export const experience: Experience[] = [
     description:
       "Performance Management and OKR Governance: Led end-to-end PMS cycles on Keka and institutionalized quarterly OKR frameworks across teams, driving goal alignment, structured reviews, and improved performance accountability.\n\nHR Business Partnering and Span Leadership: Acted as HRBP for 230+ employees in a 370-member organization, partnering with leadership to drive people strategy, resolve organizational challenges, and enable data-backed decision-making.\n\nCompetency Framework and Career Architecture: Designed and implemented a comprehensive skill and competency matrix across functions, enabling structured career pathing, clearer role expectations, and targeted development planning.\n\nEmployee Engagement and Experience Optimization: Led employee connect initiatives and redesigned eNPS and onboarding feedback mechanisms, generating actionable insights to enhance engagement and improve onboarding effectiveness.\n\nManagerial Effectiveness and Coaching Enablement: Developed and deployed manager best-practice playbooks, strengthening coaching capabilities and improving the effectiveness of the managerial layer.",
     current: true,
+    tools: [
+      { name: "Keka", logo: "https://logo.clearbit.com/keka.com", color: "#2A9D8F" },
+    ],
   },
   {
     id: "exp-2",
@@ -50,6 +53,10 @@ export const experience: Experience[] = [
     description:
       "Performance Management, HR Systems, and Automation: Redesigned PMS framework with measurable KPIs, co-developed an in-house performance management system using CursorAI, and automated key HR workflows including communications, reimbursements, asset tracking, and leave notifications to improve efficiency and tracking accuracy.\n\nHR Governance and Policy Architecture: Overhauled end-to-end HR documentation including offer and appointment letters, onboarding kits, appraisal and confirmation templates, exit and handover processes, and Employee Handbook, ensuring policy consistency and reduced operational risk.\n\nHR Tech Implementation and Process Digitization: Led deployment of Zoho People, automating leave, attendance, and core HR workflows, driving adoption and streamlining HR operations across the organization.\n\nEmployee Lifecycle Management and Relations: Designed structured probation review process improving clarity and time-to-productivity for new hires, mediated employee conflicts, and led group insurance rollout ensuring 100% coverage compliance and issue resolution.\n\nCompensation, Payroll, and Employee Experience: Managed payroll coordination and bonus cycles ensuring accuracy and timeliness, while conducting regular employee connect 1:1s and organizing engagement initiatives to strengthen morale and workplace culture.",
     current: false,
+    tools: [
+      { name: "Zoho People", logo: "https://logo.clearbit.com/zoho.com", color: "#E42527" },
+      { name: "Cursor AI", logo: "https://logo.clearbit.com/cursor.com", color: "#000000" },
+    ],
   },
   {
     id: "exp-3",
@@ -61,6 +68,9 @@ export const experience: Experience[] = [
     description:
       "Managed end-to-end project of implementing KPI-based PMS on Zoho People for a 130+ member IT team.",
     current: false,
+    tools: [
+      { name: "Zoho People", logo: "https://logo.clearbit.com/zoho.com", color: "#E42527" },
+    ],
   },
   {
     id: "exp-4",
@@ -72,6 +82,9 @@ export const experience: Experience[] = [
     description:
       "Headed the HR department, collaborating closely with senior leadership to design and implement comprehensive HR policies and practices for diverse global teams (APAC, Africa, LATAM).\n\nOwned end-to-end development and execution of HR programs covering recruitment, onboarding, retention, performance management, compensation, benefits, rewards, recognition, and employee engagement.\n\nRevamped and streamlined the remote onboarding process, significantly enhancing new hire experience and reducing time to full productivity.\n\nImplemented OKR tool (PeopleCues) to help track visibility and drive performance across the organization. Led the design, rollout, and communication of an OKR-based Performance Management System to improve goal alignment and performance clarity across teams.\n\nCrafted band-wise Competency matrix to facilitate Succession Planning and drive organization-wide learning.\n\nManaged major change initiatives including compensation restructuring and ESOP rollout to align incentives with business objectives and improve employee satisfaction.\n\nDeveloped and executed employee recognition initiatives aligned with company values, fostering a culture of appreciation and engagement.\n\nAnalyzed eNPS survey data and formulated actionable strategies that addressed key employee concerns, leading to measurable improvements in employee satisfaction.",
     current: false,
+    tools: [
+      { name: "PeopleCues", logo: "https://logo.clearbit.com/peoplecues.com", color: "#6366F1" },
+    ],
   },
   {
     id: "exp-5",
