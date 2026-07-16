@@ -4,8 +4,9 @@ import path from "path";
 import { componentTagger } from "lovable-tagger";
 import tailwindcss from "@tailwindcss/vite";
 
-// https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
+
+  base: "/cn-resume/",
 
   server: {
     host: "::",
