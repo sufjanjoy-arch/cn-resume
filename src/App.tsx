@@ -38,7 +38,7 @@ const App = () => (
         <TooltipProvider>
           <Toaster />
           <Sonner />
-          <BrowserRouter basename="/cn-resume">
+          <BrowserRouter>
             <Routes>
               <Route path="/" element={<Hero1Page />} />
               <Route path="/style-guide" element={<StyleGuide />} />
