@@ -6,7 +6,7 @@ import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig(({ mode }) => ({
 
-  base: "/cn-resume/",
+
 
   server: {
     host: "::",
