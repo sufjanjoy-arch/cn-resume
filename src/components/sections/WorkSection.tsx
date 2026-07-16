@@ -20,7 +20,7 @@ export default function WorkSection() {
   );
 
   const scrollerRef = useRef<HTMLDivElement>(null);
-  const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const cardRefs = useRef<(HTMLElement | null)[]>([]);
   const [activeIndex, setActiveIndex] = useState(0);
 
   // Track active card via IntersectionObserver on horizontal scroller
