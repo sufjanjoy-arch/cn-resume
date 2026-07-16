@@ -1,161 +1,151 @@
-import { useState, useRef, useEffect } from "react";
+import { useMemo, useRef, useState, useEffect } from "react";
 import { experience } from "@/data/portfolio-data";
 import SplitSection from "@/components/ui/split-section";
 import { format } from "date-fns";
-import { ChevronDown, MapPin, Briefcase } from "lucide-react";
-import { motion, AnimatePresence, useInView } from "framer-motion";
+import { ChevronLeft, ChevronRight, MapPin, Briefcase } from "lucide-react";
+import { motion } from "framer-motion";
 
 /**
- * WorkSection Component
- * Interactive career journey with expandable role cards and a sticky chapter navigator
+ * WorkSection — horizontal, chronologically-ordered career journey.
+ * Cards snap-scroll left → right, starting with the earliest role.
  */
 export default function WorkSection() {
-  const [activeStep, setActiveStep] = useState(0);
-  const [expandedId, setExpandedId] = useState<string | null>(experience[0]?.id || null);
-  const sectionRef = useRef<HTMLElement>(null);
-  const stepRefs = useRef<(HTMLDivElement | null)[]>([]);
+  // Chronological order: earliest company first
+  const journey = useMemo(
+    () =>
+      [...experience].sort(
+        (a, b) => new Date(a.startDate).getTime() - new Date(b.startDate).getTime()
+      ),
+    []
+  );
 
-  // Track which step is most visible in the viewport
+  const scrollerRef = useRef<HTMLDivElement>(null);
+  const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  // Track active card via IntersectionObserver on horizontal scroller
   useEffect(() => {
+    const root = scrollerRef.current;
+    if (!root) return;
     const observers: IntersectionObserver[] = [];
-
-    stepRefs.current.forEach((el, index) => {
+    cardRefs.current.forEach((el, i) => {
       if (!el) return;
-      const observer = new IntersectionObserver(
+      const obs = new IntersectionObserver(
         ([entry]) => {
-          if (entry.isIntersecting) {
-            setActiveStep(index);
-          }
+          if (entry.isIntersecting && entry.intersectionRatio > 0.6) setActiveIndex(i);
         },
-        { threshold: 0.5, rootMargin: "-20% 0px -40% 0px" }
+        { root, threshold: [0.6, 0.9] }
       );
-      observer.observe(el);
-      observers.push(observer);
+      obs.observe(el);
+      observers.push(obs);
     });
-
-    return () => observers.forEach((obs) => obs.disconnect());
+    return () => observers.forEach((o) => o.disconnect());
   }, []);
 
-  const scrollToStep = (index: number) => {
-    const el = stepRefs.current[index];
-    if (el) {
-      el.scrollIntoView({ behavior: "smooth", block: "center" });
-      setExpandedId(experience[index].id);
-    }
+  const scrollTo = (index: number) => {
+    const el = cardRefs.current[index];
+    if (el) el.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
   };
 
-  const toggleCard = (id: string) => {
-    setExpandedId((current) => (current === id ? null : id));
+  const nudge = (dir: -1 | 1) => {
+    const next = Math.max(0, Math.min(journey.length - 1, activeIndex + dir));
+    scrollTo(next);
   };
 
   return (
     <SplitSection title="Career Journey" id="work" count={2}>
       <div className="relative">
-        {/* Sticky chapter navigator — desktop only */}
-        <nav className="hidden lg:block absolute left-0 top-0 bottom-0 w-16 print:hidden">
-          <div className="sticky top-[140px] flex flex-col items-center gap-6">
-            {experience.map((job, index) => {
-              const isActive = activeStep === index;
-              const isExpanded = expandedId === job.id;
-              return (
-                <button
-                  key={job.id}
-                  onClick={() => scrollToStep(index)}
-                  className="group relative flex items-center justify-center w-10 h-10 transition-all"
-                  aria-label={`Go to ${job.company}`}
-                >
-                  <span
-                    className={`absolute inset-0 rounded-full border transition-all duration-300 ${
-                      isActive || isExpanded
-                        ? "border-[var(--color-primary)] bg-[var(--color-primary)]"
-                        : "border-[var(--color-border)] bg-background group-hover:border-[var(--color-primary)]/50"
-                    }`}
-                    style={{ borderRadius: "60% 40% 30% 70% / 60% 30% 70% 40%" }}
-                  />
-                  <span
-                    className={`relative text-sm font-medium transition-colors duration-300 ${
-                      isActive || isExpanded
-                        ? "text-primary-foreground"
-                        : "text-[var(--color-muted-foreground)]"
-                    }`}
-                  >
-                    {String(index + 1).padStart(2, "0")}
-                  </span>
-                </button>
-              );
-            })}
-            {/* Vertical connecting line */}
-            <div className="absolute top-5 bottom-5 left-1/2 w-px -translate-x-1/2 bg-[var(--color-border)] -z-10" />
+        {/* Controls */}
+        <div className="flex items-center justify-between mb-6 print:hidden">
+          <div className="text-tiny uppercase tracking-wide text-[var(--color-muted-foreground)]">
+            Chapter {String(activeIndex + 1).padStart(2, "0")} / {String(journey.length).padStart(2, "0")}
+            <span className="mx-2 text-[var(--color-border)]">·</span>
+            <span className="text-[var(--color-primary)] font-medium">{journey[activeIndex]?.company}</span>
           </div>
-        </nav>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => nudge(-1)}
+              disabled={activeIndex === 0}
+              aria-label="Previous role"
+              className="w-9 h-9 rounded-full border border-[var(--color-border)] flex items-center justify-center hover:border-[var(--color-primary)] hover:bg-[var(--color-primary)]/5 disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+            >
+              <ChevronLeft size={16} />
+            </button>
+            <button
+              onClick={() => nudge(1)}
+              disabled={activeIndex === journey.length - 1}
+              aria-label="Next role"
+              className="w-9 h-9 rounded-full border border-[var(--color-border)] flex items-center justify-center hover:border-[var(--color-primary)] hover:bg-[var(--color-primary)]/5 disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+            >
+              <ChevronRight size={16} />
+            </button>
+          </div>
+        </div>
 
-        {/* Journey cards */}
-        <div className="lg:pl-20 space-y-12 md:space-y-16">
-          {experience.map((job, index) => {
-            const start = format(new Date(job.startDate), "MMM yyyy");
-            const end = job.endDate ? format(new Date(job.endDate), "MMM yyyy") : "Present";
-            const duration = getDuration(job.startDate, job.endDate);
-            const isExpanded = expandedId === job.id;
-            const isActive = activeStep === index;
+        {/* Horizontal scroller */}
+        <div
+          ref={scrollerRef}
+          className="relative -mx-4 sm:-mx-6 px-4 sm:px-6 overflow-x-auto snap-x snap-mandatory scroll-smooth pb-6 print:overflow-visible print:mx-0 print:px-0"
+          style={{ scrollbarWidth: "thin" }}
+        >
+          {/* Timeline rail */}
+          <div className="absolute left-0 right-0 top-[92px] h-px bg-gradient-to-r from-transparent via-[var(--color-border)] to-transparent print:hidden" />
 
-            return (
-              <motion.div
-                key={job.id}
-                ref={(el) => { stepRefs.current[index] = el; }}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-80px" }}
-                transition={{ duration: 0.5, delay: index * 0.08, ease: "easeOut" }}
-                className="relative"
-              >
-                {/* Mobile step indicator */}
-                <div className="lg:hidden absolute -left-4 top-0 flex flex-col items-center h-full print:hidden">
+          <div className="flex gap-6 print:flex-col print:gap-8">
+            {journey.map((job, index) => {
+              const start = format(new Date(job.startDate), "MMM yyyy");
+              const end = job.endDate ? format(new Date(job.endDate), "MMM yyyy") : "Present";
+              const duration = getDuration(job.startDate, job.endDate);
+              const isActive = activeIndex === index;
+
+              return (
+                <motion.article
+                  key={job.id}
+                  ref={(el) => { cardRefs.current[index] = el; }}
+                  initial={{ opacity: 0, y: 24 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-40px" }}
+                  transition={{ duration: 0.5, delay: index * 0.05, ease: "easeOut" }}
+                  className="relative snap-center shrink-0 w-[85vw] sm:w-[520px] md:w-[560px] print:w-full print:shrink"
+                >
+                  {/* Chapter marker on the rail */}
+                  <div className="flex flex-col items-start mb-4 print:hidden">
+                    <div className="text-tiny uppercase tracking-wider text-[var(--color-primary)] font-medium mb-2">
+                      Chapter {String(index + 1).padStart(2, "0")}
+                      <span className="mx-2 text-[var(--color-border)]">·</span>
+                      <span className="text-[var(--color-muted-foreground)]">{duration}</span>
+                    </div>
+                    <div className="flex items-center gap-3 w-full">
+                      <span
+                        className={`relative w-4 h-4 rounded-full transition-all ${
+                          isActive
+                            ? "bg-[var(--color-primary)] scale-125"
+                            : "bg-background border-2 border-[var(--color-border)]"
+                        }`}
+                      >
+                        {isActive && (
+                          <span className="absolute inset-0 rounded-full bg-[var(--color-primary)] animate-ping opacity-40" />
+                        )}
+                      </span>
+                      <span className="text-small text-[var(--color-muted-foreground)]">
+                        {start} — {end}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Card */}
                   <div
-                    className={`w-8 h-8 flex items-center justify-center text-xs font-medium rounded-full border transition-colors ${
-                      isActive || isExpanded
-                        ? "border-[var(--color-primary)] bg-[var(--color-primary)] text-primary-foreground"
-                        : "border-[var(--color-border)] bg-background text-[var(--color-muted-foreground)]"
+                    className={`rounded-2xl border p-6 md:p-7 h-full transition-all duration-300 print:border print:border-[#ddd] print:rounded-none print:p-4 ${
+                      isActive
+                        ? "bg-[var(--color-primary)]/[0.04] border-[var(--color-primary)]/40 shadow-sm"
+                        : "bg-background border-[var(--color-border)]"
                     }`}
-                    style={{ borderRadius: "60% 40% 30% 70% / 60% 30% 70% 40%" }}
                   >
-                    {String(index + 1).padStart(2, "0")}
-                  </div>
-                  {index !== experience.length - 1 && (
-                    <div className="w-px flex-1 bg-[var(--color-border)] mt-3" />
-                  )}
-                </div>
-
-                <div className="ml-8 lg:ml-0">
-                  {/* Chapter label */}
-                  <div className="mb-3 flex items-center gap-2 text-tiny uppercase tracking-wide text-[var(--color-primary)] font-medium">
-                    <span className="hidden sm:inline">Chapter {String(index + 1).padStart(2, "0")}</span>
-                    <span className="sm:hidden">Step {String(index + 1).padStart(2, "0")}</span>
-                    <span className="w-8 h-px bg-[var(--color-primary)]/40" />
-                    <span className="text-[var(--color-muted-foreground)]">{duration}</span>
-                  </div>
-
-                  {/* Card header — clickable */}
-                  <button
-                    onClick={() => toggleCard(job.id)}
-                    className={`w-full text-left group rounded-lg border p-5 md:p-6 transition-all duration-300 ${
-                      isExpanded
-                        ? "bg-[var(--color-primary)]/5 border-[var(--color-primary)]/40 shadow-sm"
-                        : "bg-background border-[var(--color-border)] hover:border-[var(--color-primary)]/40 hover:bg-[var(--color-primary)]/[0.02]"
-                    }`}
-                    aria-expanded={isExpanded}
-                  >
-                    <div className="flex items-start justify-between gap-4">
-                      <div className="flex-1 min-w-0">
-                        <div className="flex flex-wrap items-center gap-2 mb-2">
-                          <h3 className="text-large text-[var(--color-foreground)]">{job.role}</h3>
-                          {job.current && (
-                            <span className="inline-flex items-center px-2 py-0.5 rounded-full text-tiny bg-[var(--color-primary)]/10 text-[var(--color-primary)] font-medium">
-                              Current
-                            </span>
-                          )}
-                        </div>
-                        <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-small text-[var(--color-muted-foreground)]">
-                          <span className="inline-flex items-center gap-1.5">
+                    <div className="flex items-start justify-between gap-4 mb-4">
+                      <div className="min-w-0">
+                        <h3 className="text-large text-[var(--color-foreground)] leading-tight">{job.role}</h3>
+                        <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-small text-[var(--color-muted-foreground)]">
+                          <span className="inline-flex items-center gap-1.5 font-medium text-[var(--color-foreground)]">
                             <Briefcase size={13} />
                             {job.company}
                           </span>
@@ -165,77 +155,117 @@ export default function WorkSection() {
                           </span>
                         </div>
                       </div>
-                      <div
-                        className={`flex-shrink-0 w-8 h-8 flex items-center justify-center rounded-full border transition-all duration-300 ${
-                          isExpanded
-                            ? "border-[var(--color-primary)] bg-[var(--color-primary)] text-primary-foreground rotate-180"
-                            : "border-[var(--color-border)] text-[var(--color-muted-foreground)] group-hover:border-[var(--color-primary)]/50"
-                        }`}
-                      >
-                        <ChevronDown size={16} />
-                      </div>
+                      {job.current && (
+                        <span className="inline-flex shrink-0 items-center px-2.5 py-1 rounded-full text-tiny bg-[var(--color-primary)]/10 text-[var(--color-primary)] font-medium">
+                          Current
+                        </span>
+                      )}
                     </div>
-                  </button>
 
-                  {/* Expandable content */}
-                  <AnimatePresence initial={false}>
-                    {isExpanded && (
-                      <motion.div
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: "auto", opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }}
-                        transition={{ duration: 0.35, ease: [0.25, 0.46, 0.45, 0.94] }}
-                        className="overflow-hidden"
-                      >
-                        <div className="pt-5 pb-2 grid gap-4 md:grid-cols-2">
-                          {job.description
-                            .split("\n\n")
-                            .filter(Boolean)
-                            .map((line, i) => {
-                              const [label, body] = splitLine(line);
-                              return (
-                                <div
-                                  key={i}
-                                  className="rounded-md border border-[var(--color-border)]/60 bg-background p-4 print:border print:border-[#ddd]"
-                                >
-                                  <h4 className="text-small font-medium text-[var(--color-primary)] mb-1">
-                                    {label}
-                                  </h4>
-                                  <p className="text-small text-[var(--color-muted-foreground)] leading-relaxed">
-                                    {body}
-                                  </p>
-                                </div>
-                              );
-                            })}
+                    {/* Tool logos */}
+                    {job.tools && job.tools.length > 0 && (
+                      <div className="mb-5 pb-5 border-b border-[var(--color-border)]/60">
+                        <div className="text-tiny uppercase tracking-wide text-[var(--color-muted-foreground)] mb-2">
+                          Tools & Platforms
                         </div>
-                      </motion.div>
+                        <div className="flex flex-wrap gap-2">
+                          {job.tools.map((tool) => (
+                            <div
+                              key={tool.name}
+                              className="group inline-flex items-center gap-2 pl-1.5 pr-3 py-1.5 rounded-full border border-[var(--color-border)] bg-background hover:border-[var(--color-primary)]/50 hover:-translate-y-0.5 transition-all duration-200"
+                              title={tool.name}
+                            >
+                              <span className="w-6 h-6 rounded-full bg-white border border-[var(--color-border)]/60 flex items-center justify-center overflow-hidden">
+                                <img
+                                  src={tool.logo}
+                                  alt={`${tool.name} logo`}
+                                  className="w-4 h-4 object-contain"
+                                  loading="lazy"
+                                  onError={(e) => {
+                                    const t = e.currentTarget;
+                                    t.style.display = "none";
+                                    const parent = t.parentElement;
+                                    if (parent && !parent.querySelector("span")) {
+                                      const s = document.createElement("span");
+                                      s.textContent = tool.name.charAt(0);
+                                      s.className = "text-tiny font-semibold text-[var(--color-primary)]";
+                                      parent.appendChild(s);
+                                    }
+                                  }}
+                                />
+                              </span>
+                              <span className="text-small text-[var(--color-foreground)]">{tool.name}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
                     )}
-                  </AnimatePresence>
-                </div>
-              </motion.div>
-            );
-          })}
+
+                    {/* Highlights */}
+                    <div className="space-y-3">
+                      {job.description
+                        .split("\n\n")
+                        .filter(Boolean)
+                        .map((line, i) => {
+                          const [label, body] = splitLine(line);
+                          return (
+                            <div key={i} className="text-small leading-relaxed">
+                              {label && (
+                                <span className="font-medium text-[var(--color-foreground)]">{label}: </span>
+                              )}
+                              <span className="text-[var(--color-muted-foreground)]">{body}</span>
+                            </div>
+                          );
+                        })}
+                    </div>
+                  </div>
+                </motion.article>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Dot navigator */}
+        <div className="flex items-center justify-center gap-2 mt-6 print:hidden">
+          {journey.map((job, index) => (
+            <button
+              key={job.id}
+              onClick={() => scrollTo(index)}
+              aria-label={`Go to ${job.company}`}
+              className="group flex flex-col items-center gap-1.5"
+            >
+              <span
+                className={`h-1.5 rounded-full transition-all duration-300 ${
+                  activeIndex === index
+                    ? "w-8 bg-[var(--color-primary)]"
+                    : "w-1.5 bg-[var(--color-border)] group-hover:bg-[var(--color-primary)]/50"
+                }`}
+              />
+              <span
+                className={`text-tiny transition-colors ${
+                  activeIndex === index
+                    ? "text-[var(--color-primary)]"
+                    : "text-[var(--color-muted-foreground)]/60"
+                }`}
+              >
+                {job.company}
+              </span>
+            </button>
+          ))}
         </div>
       </div>
     </SplitSection>
   );
 }
 
-/**
- * Split a responsibility line like "Label: Body" into a heading and paragraph.
- * Falls back to the whole line as the body if no colon is present.
- */
 function splitLine(line: string): [string, string] {
   const colonIndex = line.indexOf(":");
-  if (colonIndex > 0) {
+  if (colonIndex > 0 && colonIndex < 80) {
     return [line.slice(0, colonIndex).trim(), line.slice(colonIndex + 1).trim()];
   }
   return ["", line.trim()];
 }
 
-/**
- * Calculate a human-readable duration from start/end ISO dates.
- */
 function getDuration(startDate: string, endDate: string | null): string {
   const start = new Date(startDate);
   const end = endDate ? new Date(endDate) : new Date();
