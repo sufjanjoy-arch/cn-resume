@@ -1,6 +1,5 @@
 /**
  * Portfolio Type Definitions
- * TypeScript interfaces for portfolio data structures
  */
 
 export interface PersonalInfo {
@@ -20,65 +19,41 @@ export interface ExperienceTool {
   color?: string;
 }
 
+export type EmploymentType = "full-time" | "part-time" | "consultant" | "contract";
+
 export interface Experience {
   id: string;
+  slug: string;
   company: string;
   role: string;
   location: string;
   startDate: string;
   endDate: string | null;
+  employmentType: EmploymentType;
+  story: string;
   description: string;
   media?: string;
   current: boolean;
   tools?: ExperienceTool[];
+  accentColor?: string;
 }
 
 export interface Writing {
-  id: string;
-  title: string;
-  publication: string;
-  date: string;
-  url: string;
-  contributors?: string[];
-  featured: boolean;
+  id: string; title: string; publication: string; date: string; url: string;
+  contributors?: string[]; featured: boolean;
 }
-
 export interface Speaking {
-  id: string;
-  event: string;
-  date: string;
-  location: string;
-  talk: string;
-  description?: string;
-  url?: string;
-  recordingUrl?: string;
-  slidesUrl?: string;
-  upcoming: boolean;
+  id: string; event: string; date: string; location: string; talk: string;
+  description?: string; url?: string; recordingUrl?: string; slidesUrl?: string; upcoming: boolean;
 }
-
 export interface Project {
-  id: string;
-  name: string;
-  description: string;
-  techStack: string[];
-  liveUrl?: string;
-  githubUrl?: string;
-  status: "active" | "archived";
+  id: string; name: string; description: string; techStack: string[];
+  liveUrl?: string; githubUrl?: string; status: "active" | "archived";
 }
-
 export interface Education {
-  id: string;
-  institution: string;
-  degree: string;
-  field: string;
-  startYear: string;
-  endYear: string;
-  location: string;
-  details?: string;
+  id: string; institution: string; degree: string; field: string;
+  startYear: string; endYear: string; location: string; details?: string;
 }
-
 export interface SocialLink {
-  platform: string;
-  username?: string;
-  url: string;
+  platform: string; username?: string; url: string;
 }

@@ -9,6 +9,9 @@ import StyleGuide from "./pages/StyleGuide";
 import NotFound from "./pages/NotFound";
 import HeroVariants from "./pages/HeroVariants";
 import Hero1Page from "./pages/variants/Hero1Page";
+import IntroLanding from "./pages/IntroLanding";
+import JourneyPage from "./pages/JourneyPage";
+import ResumePage from "./pages/ResumePage";
 import Hero2Page from "./pages/variants/Hero2Page";
 import Hero3Page from "./pages/variants/Hero3Page";
 import Hero4Page from "./pages/variants/Hero4Page";
@@ -40,7 +43,11 @@ const App = () => (
           <Sonner />
           <BrowserRouter>
             <Routes>
-              <Route path="/" element={<Hero1Page />} />
+              <Route path="/" element={<IntroLanding />} />
+              <Route path="/journey" element={<JourneyPage />} />
+              <Route path="/journey/:slug" element={<JourneyPage />} />
+              <Route path="/resume" element={<ResumePage />} />
+              <Route path="/legacy" element={<Hero1Page />} />
               <Route path="/style-guide" element={<StyleGuide />} />
               <Route path="/variants" element={<HeroVariants />} />
               <Route path="/hero1" element={<Hero1Page />} />
