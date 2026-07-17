@@ -1,59 +1,139 @@
-You're not restricted to the template at all. This is a standard React + Vite + Tailwind app, so any section can be rewritten, replaced, or animated. We can keep the existing data file and just swap how it is presented.
 
-Below is a plan to make the experience section feel like a guided career journey.
+# Storytelling Portfolio — Implementation Plan
+
+A two-page experience: a quiet intro landing that invites the reader in, and a chapter-book career journey where each organization is its own "chapter" with a warm-professional story, expandable detail, and full mobile support. Plus a real fix to the PDF résumé download so colors, fonts, and formatting are preserved.
+
+## Page 1 — Intro Landing (`/`)
+
+Minimal, cinematic, one screen on desktop, tap-friendly on mobile.
 
 ```text
-Current state                      Proposed state
------------------                  --------------------------------
-Static timeline                    Interactive "career journey" band
-Plain text blocks                  Expandable role cards
-One-page scroll                    Optional chapter/step dots
-Minimal motion                     Scroll-driven fade/slide animations
+┌──────────────────────────────────────────────┐
+│                                              │
+│   [subtle animated backdrop — sage blobs]    │
+│                                              │
+│   CHAITRA NAIR                               │
+│   HR Business Partner · People Strategy      │
+│                                              │
+│   [ 7.5+ yrs ]  [ Bangalore, India ]         │
+│   [ EN · HI · ML · GU ]                      │
+│                                              │
+│   Short 2–3 sentence "about me" —            │
+│   warm, human, not the full bio.             │
+│                                              │
+│   [ in ]  [ ✉ ]         [ ↓ Résumé (PDF) ]   │
+│                                              │
+│              ─────────────                   │
+│                                              │
+│         Begin the career journey  →          │
+│         (animated arrow / draws in)          │
+│                                              │
+└──────────────────────────────────────────────┘
 ```
 
-## What we will build
+- Name, role tagline, experience badge, location, language chips.
+- Short "about" — 2–3 sentences distilled from the current bio (not the full paragraph block).
+- LinkedIn + email as icons; Résumé download button.
+- A prominent, animated CTA ("Begin the career journey →") that navigates to `/journey`.
+- Framer Motion staggered fade-in on load. Reduced-motion respected.
 
-1. **Interactive Career Journey section**
-   - Replace the current two-column timeline with a single vertical "journey" band.
-   - Each role becomes a card on the timeline with a compact header: company, role, and years.
-   - Clicking a card expands it in place to reveal the full responsibilities and achievements.
-   - Only one card expanded at a time, so the story feels sequential.
-   - Add a small numbered dot or "chapter" marker per role (1 → 5) on the left rail.
+## Page 2 — Career Journey (`/journey`)
 
-2. **Sticky mini navigator (optional but recommended)**
-   - A thin left-side or floating pill that highlights which role is currently in view.
-   - Clicking a step scrolls to that role.
-   - Keeps the "journey" metaphor as the user scrolls.
+Chapter-book format: one organization per "page," advance with next/prev (or swipe on mobile). Ordered chronologically, starting with Skillventory (2018) → Finbox (present).
 
-3. **Subtle motion**
-   - Cards fade + slide up as they enter the viewport.
-   - Expansion uses a smooth height animation.
-   - Decorative connecting line between the dots animates its fill as the user scrolls.
+```text
+┌──────────────────────────────────────────────┐
+│  ← Back to intro           Chapter 03 / 05   │
+│                                              │
+│   ECLAT ENGINEERING                          │
+│   Human Resource Business Partner            │
+│   Apr 2020 – Aug 2024 · 4 yr 5 mo            │
+│   Full-time · Remote / Global                │
+│                                              │
+│   ─── The Story ───                          │
+│   A short warm-professional paragraph:       │
+│   the org context, what you walked into,     │
+│   what you built, what changed. 3–5 lines.   │
+│                                              │
+│   🛠  [Keka] [PeopleCues] [Zoho]  (chips)    │
+│                                              │
+│   ▸ Read the full chapter                    │
+│   ────────────────────────────────           │
+│   (expands smoothly to reveal grouped        │
+│    bullets: Strategy · Systems · People ·    │
+│    Change · Impact)                          │
+│                                              │
+│   ←  Prev chapter        Next chapter  →     │
+│                                              │
+│   ●─●─●─○─○   (chapter progress dots)        │
+└──────────────────────────────────────────────┘
+```
 
-4. **Keep the palette you chose**
-   - Sage & Cream remains the base.
-   - Primary accent stays the existing green/cyan token.
-   - No hardcoded colors; everything stays on design tokens.
+Key behaviors:
+- **One org per view.** Prev/Next buttons + keyboard arrows on desktop; swipe gestures on mobile (Framer Motion `drag`).
+- **Story block first** — a fresh 3–5 sentence warm-professional narrative per org that I'll draft from the existing descriptions. User reviews and edits inline via `portfolio-data.ts`.
+- **Chapter metadata:** company, role, tenure with auto-computed duration, employment type (full-time / part-time / consultant), location.
+- **Tool chips** with logos (Keka, Zoho, PeopleCues, Cursor AI) — carried over from current design.
+- **Expand for detail** — "Read the full chapter" opens the categorized bullets (Performance, Systems, Engagement, etc.), grouped from existing `description` text.
+- **Chapter dots** at the bottom double as jump-to nav.
+- **Page turn animation** — subtle horizontal slide + fade on chapter change; feels like turning a page without being gimmicky.
+- **Deep-linkable** — `/journey/finbox`, `/journey/attri`, etc., so a specific chapter can be shared.
 
-5. **Hero stays, others untouched**
-   - Leave Hero1, About, Skills, Education, and Contact as they are.
-   - Only the Experience section gets the interactive journey treatment.
+## Mobile Design
 
-## Technical approach
+Not an afterthought — designed for phone first, then scaled up.
 
-- Use React state (`useState`) for the active expanded card.
-- Use a small Intersection Observer hook or Framer Motion's `whileInView` for scroll animations.
-- Keep the existing `experience` array from `src/data/portfolio-data.ts`; no data changes needed.
-- Add CSS transitions/keyframes for height expansion; no heavy new libraries required.
+- Intro page: single column, generous vertical spacing, CTA is a full-width tappable button.
+- Journey page: chapters stack full-screen; swipe left/right to advance; expand section opens as a bottom sheet-style panel; tool chips wrap; navigation dots stay visible above the thumb zone.
+- Font sizes reduce sensibly (hero drops from ~64px → ~40px). Touch targets ≥44px. Test in the 375×812 viewport.
 
-## Out of scope (unless you ask)
+## PDF Résumé — Real Fix
 
-- Full slide-deck presentation mode (that would be a separate page/app).
-- Backend changes or new dependencies beyond a lightweight animation helper.
-- Changing the color palette or fonts.
+Current print CSS strips colors and mangles layout. New approach: **a dedicated print route** rather than fighting the interactive UI's print styles.
 
-## Deliverable
+- New route `/resume` that renders a purpose-built one-page (or two-page) résumé component in the sage/cream palette, with real print-preserved styling (`-webkit-print-color-adjust: exact; print-color-adjust: exact`), proper A4 layout, and matching fonts (Archivo / Ranade fallbacks).
+- The "Résumé" button opens `/resume?print=1`, which auto-triggers the print dialog. Colors, fonts, section dividers, and the sage accent bar all render in the PDF.
+- The interactive journey pages no longer need print CSS overrides — they're not what gets printed.
 
-A single updated page where the Experience section feels like a clickable career storybook, while the rest of the site remains clean and readable. The print/Save-as-PDF résumé button continues to work because the expanded details will still render as normal content in print media.
+## Story voice (warm-professional)
 
-If you prefer the slide-by-slide version instead of the expandable timeline, I can build that as a separate `/journey` route that shows one role per slide with next/previous navigation. Let me know if you want that variation instead.
+For each of the five orgs I'll draft a 3–5 sentence chapter opener that:
+- Names the context (stage of company, team size, challenge).
+- Names what you built or led.
+- Ends on the outcome or the shift you drove.
+
+Example tone for Eclat:
+> A remote-first engineering company with teams across APAC, Africa, and LATAM — and no unified people function. Over four years I built one: policies for global teams, an OKR-based performance system on PeopleCues, a band-wise competency matrix, and the communication scaffolding around a company-wide ESOP rollout. By the end, HR wasn't a support function — it was part of how the business made decisions.
+
+I'll draft all five, you edit any that don't sound like you.
+
+## Technical Approach
+
+- **Routes:** add `/journey`, `/journey/:companyId`, and `/resume` to `App.tsx`. Intro page becomes a simpler variant of `Hero1Page`.
+- **Data:** extend `Experience` type with `story: string`, `employmentType: 'full-time' | 'part-time' | 'consultant'`, and `slug: string`. Fill in `portfolio-data.ts`.
+- **Components:**
+  - `IntroLanding.tsx` — new landing, replaces current one-page layout on `/`.
+  - `JourneyPage.tsx` — chapter-book container with Framer Motion `AnimatePresence`, keyboard + swipe nav, chapter dots.
+  - `ChapterCard.tsx` — single org view: story, metadata, tool chips, expandable detail.
+  - `ResumePage.tsx` — print-optimized résumé at `/resume`.
+- **Retire:** the current horizontal-scroll `WorkSection` (superseded by the journey page). Keep other sections (About/Skills/Education/Contact) reachable — either linked from the intro footer or absorbed into the journey's final "epilogue" chapter (TBD; I'd suggest a small footer on the intro with links).
+- **Motion:** Framer Motion for chapter transitions, staggered intro reveal, arrow CTA. Respect `prefers-reduced-motion`.
+- **Mobile:** Tailwind responsive breakpoints; swipe via `motion.div` with `drag="x"` and `dragConstraints`; test at 375px width.
+
+## Out of Scope
+
+- Adding new sections not in the current data (writing, speaking, projects remain empty).
+- Backend/CMS — content stays in `portfolio-data.ts`.
+- Custom illustrations per org (tool logos only, via Clearbit).
+
+## Build Order
+
+1. Add types + story fields to `portfolio-data.ts`; draft five chapter stories.
+2. Build `IntroLanding` and wire `/` to it.
+3. Build `JourneyPage` + `ChapterCard` with prev/next, keyboard, swipe, expand.
+4. Add chapter dots, deep links (`/journey/:slug`), and page-turn animation.
+5. Build `/resume` route with real print styling; rewire résumé button.
+6. Mobile QA at 375px and 768px via Playwright screenshots.
+7. Verify PDF export renders with correct colors and fonts.
+
+Approve and I'll start building.

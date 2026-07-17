@@ -229,3 +229,47 @@
   }
 }
 
+/* ===== Résumé page: preserve colors when printing ===== */
+.resume-root,
+.resume-root * {
+  -webkit-print-color-adjust: exact !important;
+  print-color-adjust: exact !important;
+  color-adjust: exact !important;
+}
+
+@media print {
+  /* When on /resume route, override the generic print rules above */
+  body:has(.resume-root) {
+    background: #faf7f1 !important;
+  }
+  .resume-root {
+    background: #faf7f1 !important;
+    padding: 0 !important;
+  }
+  .resume-root .resume-sheet {
+    box-shadow: none !important;
+    max-width: 100% !important;
+  }
+  .resume-root .resume-header {
+    color: #ffffff !important;
+  }
+  .resume-root .resume-header * {
+    color: #ffffff !important;
+  }
+  /* Undo the generic overrides for the resume page */
+  .resume-root section {
+    padding: 0 !important;
+    border: 0 !important;
+    margin-bottom: 6mm !important;
+    background: transparent !important;
+  }
+  .resume-root h1 { font-size: 22pt !important; }
+  .resume-root h2 { font-size: 10pt !important; border: 0 !important; padding: 0 !important; margin-bottom: 3mm !important; }
+  .resume-root h3 { font-size: 11pt !important; }
+  .resume-root p, .resume-root li, .resume-root span, .resume-root div {
+    color: inherit !important;
+  }
+  @page { size: A4; margin: 0; }
+}
+
+
