@@ -1,7 +1,9 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { ArrowRight, Mail, Linkedin, Download, MapPin } from "lucide-react";
+import { ArrowRight, Mail, Linkedin, Download, MapPin, Loader2 } from "lucide-react";
 import { personalInfo, socialLinks, shortIntro } from "@/data/portfolio-data";
+import { downloadResumePdf } from "@/lib/download-resume";
 
 const linkedIn = socialLinks.find((l) => l.platform === "LinkedIn");
 
@@ -14,6 +16,12 @@ const fadeUp = {
 };
 
 export default function IntroLanding() {
+  const [downloading, setDownloading] = useState(false);
+  const handleDownload = async () => {
+    if (downloading) return;
+    setDownloading(true);
+    try { await downloadResumePdf(); } finally { setDownloading(false); }
+  };
   return (
     <main className="relative min-h-screen overflow-hidden bg-background text-foreground">
       {/* Ambient blobs */}
@@ -58,7 +66,7 @@ export default function IntroLanding() {
               <MapPin size={12} /> Bangalore, India
             </span>
             <span className="rounded-full border border-border bg-card/60 px-3 py-1">
-              EN · HI · ML · GU
+              English & Hindi (fluent) · Malayalam (native) · Gujarati (conversational)
             </span>
           </motion.div>
 
@@ -82,10 +90,11 @@ export default function IntroLanding() {
                aria-label="Email">
               <Mail size={16} />
             </a>
-            <Link to="/resume?print=1"
-                  className="inline-flex h-11 items-center gap-2 rounded-full border border-border bg-card/60 px-4 text-sm hover:border-[var(--color-primary)] hover:text-[var(--color-primary)] transition">
-              <Download size={14} /> Résumé (PDF)
-            </Link>
+            <button onClick={handleDownload} disabled={downloading}
+                    className="inline-flex h-11 items-center gap-2 rounded-full border border-border bg-card/60 px-4 text-sm hover:border-[var(--color-primary)] hover:text-[var(--color-primary)] transition disabled:opacity-60">
+              {downloading ? <Loader2 size={14} className="animate-spin" /> : <Download size={14} />}
+              {downloading ? "Preparing…" : "Download Résumé"}
+            </button>
           </motion.div>
         </section>
 

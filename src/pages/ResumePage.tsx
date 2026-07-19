@@ -1,19 +1,8 @@
-import { useEffect } from "react";
-import { useSearchParams } from "react-router-dom";
 import { personalInfo, socialLinks, experience, education } from "@/data/portfolio-data";
 import { tenureLabel, employmentLabel, splitDescription } from "@/lib/experience-helpers";
 
 export default function ResumePage() {
-  const [params] = useSearchParams();
-  const shouldPrint = params.get("print") === "1";
   const linkedIn = socialLinks.find((s) => s.platform === "LinkedIn");
-
-  useEffect(() => {
-    if (shouldPrint) {
-      const t = setTimeout(() => window.print(), 400);
-      return () => clearTimeout(t);
-    }
-  }, [shouldPrint]);
 
   // display roles reverse-chronological (most recent first) for résumé
   const roles = [...experience].reverse();
@@ -29,7 +18,7 @@ export default function ResumePage() {
             <span>{personalInfo.location.city}, {personalInfo.location.country}</span>
             <span>{personalInfo.email}</span>
             {linkedIn && <span>{linkedIn.url.replace(/^https?:\/\//, "")}</span>}
-            <span>EN · HI · ML · GU</span>
+            <span>English & Hindi (fluent) · Malayalam (native) · Gujarati (conversational)</span>
           </div>
         </header>
 
