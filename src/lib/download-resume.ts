@@ -29,6 +29,35 @@ export async function downloadResumePdf(filename = "Chaitra-Nair-Resume.pdf"): P
 
     const doc = iframe.contentDocument;
     if (!doc) throw new Error("No résumé document");
+
+    // html2canvas can't parse oklch() — inject sRGB fallbacks for our tokens
+    const overrideStyle = doc.createElement("style");
+    overrideStyle.textContent = `
+      :root, html, body {
+        --color-background: #dfeef1;
+        --color-foreground: #2b2b2b;
+        --color-muted: #8a8a8a;
+        --color-muted-foreground: #6b6b6b;
+        --color-border: #d5dee0;
+        --color-primary: #5a97a3;
+        --color-primary-foreground: #ffffff;
+        --color-secondary: #f2f2f2;
+        --color-secondary-foreground: #2b2b2b;
+        --color-accent: #f2f2f2;
+        --color-accent-foreground: #2b2b2b;
+        --color-destructive: #d64545;
+        --color-destructive-foreground: #ffffff;
+        --color-card: #ffffff;
+        --color-card-foreground: #2b2b2b;
+        --color-popover: #ffffff;
+        --color-popover-foreground: #2b2b2b;
+        --color-input: #e5e5e5;
+        --color-ring: #2b2b2b;
+      }
+    `;
+    doc.head.appendChild(overrideStyle);
+    await new Promise((r) => setTimeout(r, 100));
+
     const sheet = doc.querySelector(".resume-sheet") as HTMLElement | null;
     if (!sheet) throw new Error("Résumé sheet not found");
 
