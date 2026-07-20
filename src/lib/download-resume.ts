@@ -4,17 +4,18 @@ import jsPDF from "jspdf";
 /**
  * Generate and download the résumé as a PDF.
  *
- * Strategy: render /resume in a hidden iframe, then paginate by measuring
- * block-level children and starting a new PDF page whenever the next block
- * would overflow. This prevents mid-paragraph splits.
+ * Strategy: render /resume in a hidden iframe, capture the full sheet, then
+ * paginate at natural section/role boundaries. If a role is taller than the
+ * remaining page space, continue to the next safe child boundary instead of
+ * leaving a large blank area.
  */
 export async function downloadResumePdf(filename = "Chaitra-Nair-Resume.pdf"): Promise<void> {
   const iframe = document.createElement("iframe");
   iframe.style.position = "fixed";
   iframe.style.left = "-10000px";
   iframe.style.top = "0";
-  iframe.style.width = "900px";
-  iframe.style.height = "1400px";
+    iframe.style.width = "820px";
+    iframe.style.height = "1800px";
   iframe.style.border = "0";
   iframe.src = "/resume";
   document.body.appendChild(iframe);
@@ -79,40 +80,55 @@ export async function downloadResumePdf(filename = "Chaitra-Nair-Resume.pdf"): P
     const pxPerMm = fullCanvas.width / pageWmm;         // canvas px per mm of PDF page
     const pageHpx = Math.floor(pageHmm * pxPerMm);      // page height in canvas px
 
-    // Collect break candidates — top offset (in canvas px) of every block we
-    // must not split across. We use the header, each Section, and each
-    // experience/education row.
+    // Collect safe cut points. Include section titles, roles, bullets, and
+    // education rows so the paginator can keep filling a page when a full role
+    // cannot fit, instead of pushing it all to the next page.
     const sheetTop = sheet.getBoundingClientRect().top;
-    const blocks = Array.from(
+    const breakElements = Array.from(
       sheet.querySelectorAll<HTMLElement>(
-        ".resume-header, .resume-section, .resume-section > div > div, .resume-section > div > .break-inside-avoid"
+        [
+          ".resume-header",
+          ".resume-section",
+          ".resume-section-title",
+          ".resume-experience-item",
+          ".resume-bullet",
+          ".resume-education-row",
+          ".resume-skill-item",
+        ].join(", ")
       )
     );
 
-    // Build a set of "hard" y-positions (top of each block, in canvas px)
-    const hardTops = new Set<number>();
-    hardTops.add(0);
-    for (const el of blocks) {
-      const top = (el.getBoundingClientRect().top - sheetTop) * scale;
-      if (top > 0) hardTops.add(Math.round(top));
-    }
-    // Also add bottoms so we know safe cut lines
     const cutPoints: number[] = [0];
-    for (const el of blocks) {
+    for (const el of breakElements) {
       const rect = el.getBoundingClientRect();
+      cutPoints.push(Math.round((rect.top - sheetTop) * scale));
       cutPoints.push(Math.round((rect.bottom - sheetTop) * scale));
     }
     cutPoints.push(fullCanvas.height);
-    const sortedCuts = Array.from(new Set(cutPoints)).sort((a, b) => a - b);
+    const sortedCuts = Array.from(new Set(cutPoints))
+      .filter((c) => c >= 0 && c <= fullCanvas.height)
+      .sort((a, b) => a - b);
 
-    // Paginate: from currentTop, find the largest cut point <= currentTop + pageHpx
+    // Paginate: from currentTop, find the largest safe cut <= currentTop + pageHpx.
+    // Avoid very short pages unless we are at the end of the document.
     let currentTop = 0;
     let first = true;
-    while (currentTop < fullCanvas.height) {
+    const overflowTolerance = Math.floor(pxPerMm * 3);
+    while (currentTop < fullCanvas.height - overflowTolerance) {
       const maxBottom = currentTop + pageHpx;
-      let cut = sortedCuts.filter((c) => c > currentTop && c <= maxBottom).pop();
+      const possibleCuts = sortedCuts.filter((c) => c > currentTop + 24 && c <= maxBottom);
+      let cut = possibleCuts.pop();
+
+      const minimumUsefulPage = Math.floor(pageHpx * 0.72);
+      const isLastPage = fullCanvas.height - currentTop <= pageHpx;
+      if (!isLastPage && cut !== undefined && cut - currentTop < minimumUsefulPage) {
+        const fullerCut = possibleCuts.filter((c) => c - currentTop >= minimumUsefulPage).pop();
+        cut = fullerCut ?? Math.min(maxBottom, fullCanvas.height);
+      }
+
       // If no natural cut fits (single block taller than page), hard-cut at page height
       if (cut === undefined) cut = Math.min(maxBottom, fullCanvas.height);
+      if (fullCanvas.height - cut <= overflowTolerance) cut = fullCanvas.height;
 
       const sliceH = cut - currentTop;
       const slice = document.createElement("canvas");
