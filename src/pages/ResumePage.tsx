@@ -35,16 +35,25 @@ export default function ResumePage() {
 
           {/* Areas of expertise */}
           <Section title="Areas of Expertise">
-            <div className="flex flex-wrap gap-1.5">
+            <div className="grid grid-cols-2 gap-x-6 gap-y-1.5 text-[12px] leading-[1.5]">
               {[
-                "HR Strategy", "Performance Management (OKRs & KPIs)", "HRIS (Keka, Zoho, PeopleCues)",
-                "Employee Lifecycle", "Policy & Compliance", "Talent Acquisition",
-                "Compensation & Benefits", "Employee Engagement", "Change Management",
-                "People Analytics (eNPS)", "ESOP Rollout", "Remote Onboarding",
+                "HR Strategy",
+                "Performance Management (OKRs & KPIs)",
+                "HRIS — Keka, Zoho, PeopleCues",
+                "Employee Lifecycle Management",
+                "Policy Design & Compliance",
+                "Talent Acquisition",
+                "Compensation & Benefits Structuring",
+                "Employee Engagement & Experience",
+                "Change Management",
+                "People Analytics (eNPS)",
+                "ESOP Design & Rollout",
+                "Remote Onboarding Optimization",
               ].map((s) => (
-                <span key={s} className="rounded-full border border-[#c9d4c1] bg-[#eef2ea] px-2.5 py-1 text-[11px]">
-                  {s}
-                </span>
+                <div key={s} className="flex items-baseline gap-2">
+                  <span className="inline-block h-1.5 w-1.5 rounded-full bg-[#7d9b76] shrink-0 translate-y-[-2px]" />
+                  <span>{s}</span>
+                </div>
               ))}
             </div>
           </Section>
