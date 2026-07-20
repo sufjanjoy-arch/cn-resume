@@ -9,75 +9,92 @@ export default function ResumePage() {
 
   return (
     <div className="resume-root min-h-screen bg-[#f5f0e8] py-8 print:py-0">
-      <div className="resume-sheet mx-auto max-w-[820px] bg-[#faf7f1] shadow-xl print:shadow-none">
-        {/* Sage header band */}
-        <header className="resume-header px-9 py-6 text-white" style={{ background: "linear-gradient(135deg, #7d9b76 0%, #5c8a7a 100%)" }}>
-          <h1 className="text-[34px] font-light leading-none tracking-tight">{personalInfo.name}</h1>
-          <p className="mt-1 text-[14px] opacity-95">{personalInfo.title}</p>
-          <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-[11px] leading-relaxed opacity-95">
-            <span>{personalInfo.location.city}, {personalInfo.location.country}</span>
-            <span>{personalInfo.email}</span>
-            {linkedIn && <span>{linkedIn.url.replace(/^https?:\/\//, "")}</span>}
-            <span>English & Hindi (fluent) · Malayalam (native) · Gujarati (conversational)</span>
-          </div>
-        </header>
+      <div className="resume-sheet mx-auto grid h-[1123px] max-w-[794px] grid-cols-[245px_1fr] overflow-hidden bg-[#faf7f1] shadow-xl print:shadow-none">
+        <aside className="resume-sidebar bg-[#6f9279] px-7 py-8 text-white">
+          <header className="resume-header">
+            <h1 className="text-[31px] font-light leading-[0.98] tracking-tight">{personalInfo.name}</h1>
+            <p className="mt-3 text-[13px] leading-snug opacity-95">{personalInfo.title}</p>
+          </header>
 
-        <main className="px-9 py-6 text-[#2d2d2d]">
-          {/* Summary */}
-          <Section title="Profile">
-            <p className="text-[11.5px] leading-[1.55]">
-              HR Business Partner with 7.5+ years building and scaling people systems across high-growth startups.
-              Currently at Finbox, driving performance management, OKR governance, competency frameworks, and
-              employee relations for a 230+ employee span. Experienced in designing KPI-driven PMS, implementing
-              HRMS platforms, and supporting organization-wide change management including ESOP rollouts.
+          <SideSection title="Contact">
+            <div className="space-y-1.5 text-[9.8px] leading-snug opacity-95">
+              <p>{personalInfo.location.city}, {personalInfo.location.country}</p>
+              <p>{personalInfo.email}</p>
+              {linkedIn && <p className="break-words">{linkedIn.url.replace(/^https?:\/\//, "")}</p>}
+            </div>
+          </SideSection>
+
+          <SideSection title="Languages">
+            <p className="text-[9.8px] leading-relaxed opacity-95">
+              English & Hindi — fluent<br />Malayalam — native<br />Gujarati — conversational
             </p>
-          </Section>
+          </SideSection>
 
-          {/* Areas of expertise */}
-          <Section title="Areas of Expertise">
-            <div className="grid grid-cols-2 gap-x-7 gap-y-1 text-[11px] leading-[1.35]">
+          <SideSection title="Areas of Expertise">
+            <div className="space-y-1.5 text-[9.6px] leading-snug opacity-95">
               {[
                 "HR Strategy",
-                "Performance Management (OKRs & KPIs)",
-                "HRIS — Keka, Zoho, PeopleCues",
-                "Employee Lifecycle Management",
+                "Performance Management",
+                "OKRs & KPI Architecture",
+                "HRIS: Keka, Zoho, PeopleCues",
+                "Employee Lifecycle",
                 "Policy Design & Compliance",
                 "Talent Acquisition",
-                "Compensation & Benefits Structuring",
-                "Employee Engagement & Experience",
+                "Compensation & Benefits",
+                "Employee Engagement",
                 "Change Management",
-                "People Analytics (eNPS)",
-                "ESOP Design & Rollout",
-                "Remote Onboarding Optimization",
+                "People Analytics & eNPS",
+                "ESOP Communication",
               ].map((s) => (
                 <div key={s} className="resume-skill-item flex items-start gap-2">
-                  <span className="mt-[6px] inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-[#7d9b76]" />
+                  <span className="mt-[5px] h-1 w-1 shrink-0 rounded-full bg-white/75" />
                   <span>{s}</span>
                 </div>
               ))}
             </div>
+          </SideSection>
+
+          <SideSection title="Education">
+            <div className="space-y-2 text-[9.6px] leading-snug opacity-95">
+              {education.map((e) => (
+                <div key={e.id} className="resume-education-row">
+                  <p className="font-semibold">{e.degree}</p>
+                  {e.field && <p>{e.field}</p>}
+                  <p>{e.institution}</p>
+                  {(e.startYear || e.endYear) && <p>{e.startYear}{e.startYear && e.endYear ? "–" : ""}{e.endYear}</p>}
+                  {e.details && <p className="mt-0.5 opacity-85">{e.details}</p>}
+                </div>
+              ))}
+            </div>
+          </SideSection>
+        </aside>
+
+        <main className="px-7 py-7 text-[#2d2d2d]">
+          <Section title="Profile">
+            <p className="text-[10px] leading-[1.45]">
+              HR Business Partner with 7.5+ years building and scaling people systems across high-growth startups. Currently at Finbox, driving performance management, OKR governance, competency frameworks, and employee relations for a 230+ employee span. Experienced in KPI-driven PMS, HRMS implementation, ESOP rollout communication, org design, and people analytics.
+            </p>
           </Section>
 
-          {/* Experience */}
           <Section title="Professional Experience">
-            <div className="space-y-4">
+            <div className="space-y-3.5">
               {roles.map((r) => {
                 const details = splitDescription(r.description);
                 return (
                   <div key={r.id} className="resume-experience-item break-inside-avoid">
-                    <div className="flex flex-wrap items-baseline justify-between gap-2">
-                      <div>
-                        <h3 className="text-[13px] font-semibold leading-tight text-[#1e2b25]">
+                    <div className="flex items-baseline justify-between gap-3">
+                      <div className="min-w-0">
+                        <h3 className="text-[11px] font-semibold leading-tight text-[#1e2b25]">
                           {r.role} <span className="font-normal text-[#5c8a7a]">· {r.company}</span>
                         </h3>
-                        <p className="text-[10.5px] leading-snug text-[#5c5c5c]">
+                        <p className="text-[8.8px] leading-snug text-[#5c5c5c]">
                           {employmentLabel(r.employmentType)} · {r.location}
                         </p>
                       </div>
-                      <p className="text-[10.5px] font-medium text-[#5c8a7a]">{tenureLabel(r)}</p>
+                      <p className="shrink-0 text-[8.8px] font-medium text-[#5c8a7a]">{tenureLabel(r)}</p>
                     </div>
-                    <ul className="mt-1.5 space-y-1 pl-4 text-[10.8px] leading-[1.45]">
-                      {details.map((d, i) => (
+                    <ul className="mt-1 space-y-0.5 pl-3.5 text-[9.15px] leading-[1.32]">
+                      {details.slice(0, r.company === "Eclat Engineering" ? 6 : 5).map((d, i) => (
                         <li key={i} className="resume-bullet list-disc marker:text-[#7d9b76]">
                           {d.heading && <span className="font-semibold text-[#1e2b25]">{d.heading}: </span>}
                           {d.body}
@@ -89,27 +106,6 @@ export default function ResumePage() {
               })}
             </div>
           </Section>
-
-          {/* Education */}
-          <Section title="Education & Certifications">
-            <div className="space-y-1.5">
-              {education.map((e) => (
-                <div key={e.id} className="resume-education-row flex flex-wrap items-baseline justify-between gap-2 text-[11px] leading-[1.35]">
-                  <div>
-                    <span className="font-semibold text-[#1e2b25]">{e.degree}</span>
-                    {e.field && <span className="text-[#5c5c5c]"> — {e.field}</span>}
-                    <span className="text-[#5c8a7a]"> · {e.institution}</span>
-                    {e.details && <div className="text-[10.5px] text-[#5c5c5c]">{e.details}</div>}
-                  </div>
-                  {(e.startYear || e.endYear) && (
-                    <span className="text-[10.5px] text-[#5c5c5c]">
-                      {e.startYear}{e.startYear && e.endYear ? "–" : ""}{e.endYear}
-                    </span>
-                  )}
-                </div>
-              ))}
-            </div>
-          </Section>
         </main>
       </div>
     </div>
@@ -119,8 +115,19 @@ export default function ResumePage() {
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <section className="resume-section mb-4">
-      <h2 className="resume-section-title mb-2.5 text-[10px] font-semibold uppercase tracking-[0.22em] text-[#5c8a7a]">
-        <span className="inline-block h-[2px] w-6 align-middle bg-[#7d9b76]" /> <span className="ml-2 align-middle">{title}</span>
+      <h2 className="resume-section-title mb-2 text-[9.5px] font-semibold uppercase tracking-[0.2em] text-[#5c8a7a]">
+        <span className="inline-block h-[2px] w-5 align-middle bg-[#7d9b76]" /> <span className="ml-2 align-middle">{title}</span>
+      </h2>
+      {children}
+    </section>
+  );
+}
+
+function SideSection({ title, children }: { title: string; children: React.ReactNode }) {
+  return (
+    <section className="resume-section mt-7">
+      <h2 className="resume-section-title mb-2 text-[9px] font-semibold uppercase tracking-[0.22em] text-white/80">
+        {title}
       </h2>
       {children}
     </section>
