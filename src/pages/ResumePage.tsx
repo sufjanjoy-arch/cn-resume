@@ -9,8 +9,8 @@ export default function ResumePage() {
 
   return (
     <div className="resume-root min-h-screen bg-[#f5f0e8] py-8 print:py-0">
-      <div className="resume-sheet mx-auto grid h-[1123px] max-w-[794px] grid-cols-[245px_1fr] overflow-hidden bg-[#faf7f1] shadow-xl print:shadow-none">
-        <aside className="resume-sidebar bg-[#6f9279] px-7 py-8 text-white">
+      <div className="resume-sheet mx-auto grid h-[1120px] max-w-[794px] grid-cols-[245px_1fr] overflow-hidden bg-[#faf7f1] shadow-xl print:shadow-none">
+        <aside className="resume-sidebar bg-[#6f9279] px-7 py-7 text-white">
           <header className="resume-header">
             <h1 className="text-[31px] font-light leading-[0.98] tracking-tight">{personalInfo.name}</h1>
             <p className="mt-3 text-[13px] leading-snug opacity-95">{personalInfo.title}</p>
@@ -69,32 +69,32 @@ export default function ResumePage() {
           </SideSection>
         </aside>
 
-        <main className="px-7 py-7 text-[#2d2d2d]">
+        <main className="px-7 py-6 text-[#2d2d2d]">
           <Section title="Profile">
-            <p className="text-[10px] leading-[1.45]">
+            <p className="text-[9.6px] leading-[1.38]">
               HR Business Partner with 7.5+ years building and scaling people systems across high-growth startups. Currently at Finbox, driving performance management, OKR governance, competency frameworks, and employee relations for a 230+ employee span. Experienced in KPI-driven PMS, HRMS implementation, ESOP rollout communication, org design, and people analytics.
             </p>
           </Section>
 
           <Section title="Professional Experience">
-            <div className="space-y-3.5">
+            <div className="space-y-3">
               {roles.map((r) => {
                 const details = splitDescription(r.description);
                 return (
                   <div key={r.id} className="resume-experience-item break-inside-avoid">
                     <div className="flex items-baseline justify-between gap-3">
                       <div className="min-w-0">
-                        <h3 className="text-[11px] font-semibold leading-tight text-[#1e2b25]">
+                        <h3 className="text-[10.6px] font-semibold leading-tight text-[#1e2b25]">
                           {r.role} <span className="font-normal text-[#5c8a7a]">· {r.company}</span>
                         </h3>
-                        <p className="text-[8.8px] leading-snug text-[#5c5c5c]">
+                        <p className="text-[8.5px] leading-snug text-[#5c5c5c]">
                           {employmentLabel(r.employmentType)} · {r.location}
                         </p>
                       </div>
-                      <p className="shrink-0 text-[8.8px] font-medium text-[#5c8a7a]">{tenureLabel(r)}</p>
+                      <p className="shrink-0 text-[8.5px] font-medium text-[#5c8a7a]">{tenureLabel(r)}</p>
                     </div>
-                    <ul className="mt-1 space-y-0.5 pl-3.5 text-[9.15px] leading-[1.32]">
-                      {details.slice(0, r.company === "Eclat Engineering" ? 6 : 5).map((d, i) => (
+                    <ul className="mt-1 space-y-0.5 pl-3.5 text-[8.85px] leading-[1.27]">
+                      {details.slice(0, r.company === "Eclat Engineering" ? 5 : r.company === "Skillventory" ? 2 : 4).map((d, i) => (
                         <li key={i} className="resume-bullet list-disc marker:text-[#7d9b76]">
                           {d.heading && <span className="font-semibold text-[#1e2b25]">{d.heading}: </span>}
                           {d.body}
@@ -114,8 +114,8 @@ export default function ResumePage() {
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <section className="resume-section mb-4">
-      <h2 className="resume-section-title mb-2 text-[9.5px] font-semibold uppercase tracking-[0.2em] text-[#5c8a7a]">
+    <section className="resume-section mb-3.5">
+      <h2 className="resume-section-title mb-1.5 text-[9px] font-semibold uppercase tracking-[0.2em] text-[#5c8a7a]">
         <span className="inline-block h-[2px] w-5 align-middle bg-[#7d9b76]" /> <span className="ml-2 align-middle">{title}</span>
       </h2>
       {children}
@@ -125,7 +125,7 @@ function Section({ title, children }: { title: string; children: React.ReactNode
 
 function SideSection({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <section className="resume-section mt-7">
+    <section className="resume-section mt-6">
       <h2 className="resume-section-title mb-2 text-[9px] font-semibold uppercase tracking-[0.22em]" style={{ color: "rgba(255,255,255,0.8)" }}>
         {title}
       </h2>
