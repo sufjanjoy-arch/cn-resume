@@ -17,7 +17,7 @@ export default function ResumePage() {
           </header>
 
           <SideSection title="Contact">
-            <div className="space-y-1.5 text-[9.8px] leading-snug opacity-95">
+            <div className="space-y-1.5 text-[9.8px] leading-snug" style={{ color: "rgba(255,255,255,0.95)" }}>
               <p>{personalInfo.location.city}, {personalInfo.location.country}</p>
               <p>{personalInfo.email}</p>
               {linkedIn && <p className="break-words">{linkedIn.url.replace(/^https?:\/\//, "")}</p>}
@@ -25,13 +25,13 @@ export default function ResumePage() {
           </SideSection>
 
           <SideSection title="Languages">
-            <p className="text-[9.8px] leading-relaxed opacity-95">
+            <p className="text-[9.8px] leading-relaxed" style={{ color: "rgba(255,255,255,0.95)" }}>
               English & Hindi — fluent<br />Malayalam — native<br />Gujarati — conversational
             </p>
           </SideSection>
 
           <SideSection title="Areas of Expertise">
-            <div className="space-y-1.5 text-[9.6px] leading-snug opacity-95">
+            <div className="space-y-1.5 text-[9.6px] leading-snug" style={{ color: "rgba(255,255,255,0.95)" }}>
               {[
                 "HR Strategy",
                 "Performance Management",
@@ -47,7 +47,7 @@ export default function ResumePage() {
                 "ESOP Communication",
               ].map((s) => (
                 <div key={s} className="resume-skill-item flex items-start gap-2">
-                  <span className="mt-[5px] h-1 w-1 shrink-0 rounded-full bg-white/75" />
+                  <span className="mt-[5px] h-1 w-1 shrink-0 rounded-full" style={{ backgroundColor: "rgba(255,255,255,0.75)" }} />
                   <span>{s}</span>
                 </div>
               ))}
@@ -55,14 +55,14 @@ export default function ResumePage() {
           </SideSection>
 
           <SideSection title="Education">
-            <div className="space-y-2 text-[9.6px] leading-snug opacity-95">
+            <div className="space-y-2 text-[9.6px] leading-snug" style={{ color: "rgba(255,255,255,0.95)" }}>
               {education.map((e) => (
                 <div key={e.id} className="resume-education-row">
                   <p className="font-semibold">{e.degree}</p>
                   {e.field && <p>{e.field}</p>}
                   <p>{e.institution}</p>
                   {(e.startYear || e.endYear) && <p>{e.startYear}{e.startYear && e.endYear ? "–" : ""}{e.endYear}</p>}
-                  {e.details && <p className="mt-0.5 opacity-85">{e.details}</p>}
+                  {e.details && <p className="mt-0.5" style={{ color: "rgba(255,255,255,0.85)" }}>{e.details}</p>}
                 </div>
               ))}
             </div>
@@ -126,7 +126,7 @@ function Section({ title, children }: { title: string; children: React.ReactNode
 function SideSection({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <section className="resume-section mt-7">
-      <h2 className="resume-section-title mb-2 text-[9px] font-semibold uppercase tracking-[0.22em] text-white/80">
+      <h2 className="resume-section-title mb-2 text-[9px] font-semibold uppercase tracking-[0.22em]" style={{ color: "rgba(255,255,255,0.8)" }}>
         {title}
       </h2>
       {children}
