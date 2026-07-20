@@ -113,7 +113,8 @@ export async function downloadResumePdf(filename = "Chaitra-Nair-Resume.pdf"): P
     // Avoid very short pages unless we are at the end of the document.
     let currentTop = 0;
     let first = true;
-    while (currentTop < fullCanvas.height) {
+    const overflowTolerance = Math.floor(pxPerMm * 3);
+    while (currentTop < fullCanvas.height - overflowTolerance) {
       const maxBottom = currentTop + pageHpx;
       const possibleCuts = sortedCuts.filter((c) => c > currentTop + 24 && c <= maxBottom);
       let cut = possibleCuts.pop();
@@ -127,6 +128,7 @@ export async function downloadResumePdf(filename = "Chaitra-Nair-Resume.pdf"): P
 
       // If no natural cut fits (single block taller than page), hard-cut at page height
       if (cut === undefined) cut = Math.min(maxBottom, fullCanvas.height);
+      if (fullCanvas.height - cut <= overflowTolerance) cut = fullCanvas.height;
 
       const sliceH = cut - currentTop;
       const slice = document.createElement("canvas");
