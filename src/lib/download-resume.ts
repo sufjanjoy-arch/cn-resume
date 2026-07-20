@@ -3,7 +3,10 @@ import jsPDF from "jspdf";
 
 /**
  * Generate and download the résumé as a PDF.
- * Opens /resume in a hidden iframe, snapshots the sheet, and saves a multi-page A4 PDF.
+ *
+ * Strategy: render /resume in a hidden iframe, then paginate by measuring
+ * block-level children and starting a new PDF page whenever the next block
+ * would overflow. This prevents mid-paragraph splits.
  */
 export async function downloadResumePdf(filename = "Chaitra-Nair-Resume.pdf"): Promise<void> {
   const iframe = document.createElement("iframe");
@@ -17,15 +20,12 @@ export async function downloadResumePdf(filename = "Chaitra-Nair-Resume.pdf"): P
   document.body.appendChild(iframe);
 
   try {
-    // Wait for iframe load
     await new Promise<void>((resolve, reject) => {
       iframe.onload = () => resolve();
       iframe.onerror = () => reject(new Error("Failed to load résumé"));
-      setTimeout(() => resolve(), 4000); // safety timeout
+      setTimeout(() => resolve(), 4000);
     });
-
-    // Allow fonts/images to settle
-    await new Promise((r) => setTimeout(r, 600));
+    await new Promise((r) => setTimeout(r, 700));
 
     const doc = iframe.contentDocument;
     if (!doc) throw new Error("No résumé document");
@@ -61,35 +61,74 @@ export async function downloadResumePdf(filename = "Chaitra-Nair-Resume.pdf"): P
     const sheet = doc.querySelector(".resume-sheet") as HTMLElement | null;
     if (!sheet) throw new Error("Résumé sheet not found");
 
-    const canvas = await html2canvas(sheet, {
-      scale: 2,
+    // A4 page geometry
+    const pdf = new jsPDF({ unit: "mm", format: "a4", orientation: "portrait" });
+    const pageWmm = pdf.internal.pageSize.getWidth();   // 210
+    const pageHmm = pdf.internal.pageSize.getHeight();  // 297
+
+    // Snapshot the full sheet at 2x
+    const scale = 2;
+    const fullCanvas = await html2canvas(sheet, {
+      scale,
       useCORS: true,
       backgroundColor: "#faf7f1",
       windowWidth: sheet.scrollWidth,
       windowHeight: sheet.scrollHeight,
     });
 
-    const pdf = new jsPDF({ unit: "mm", format: "a4", orientation: "portrait" });
-    const pageW = pdf.internal.pageSize.getWidth();
-    const pageH = pdf.internal.pageSize.getHeight();
+    const pxPerMm = fullCanvas.width / pageWmm;         // canvas px per mm of PDF page
+    const pageHpx = Math.floor(pageHmm * pxPerMm);      // page height in canvas px
 
-    const imgW = pageW;
-    const imgH = (canvas.height * imgW) / canvas.width;
+    // Collect break candidates — top offset (in canvas px) of every block we
+    // must not split across. We use the header, each Section, and each
+    // experience/education row.
+    const sheetTop = sheet.getBoundingClientRect().top;
+    const blocks = Array.from(
+      sheet.querySelectorAll<HTMLElement>(
+        ".resume-header, .resume-section, .resume-section > div > div, .resume-section > div > .break-inside-avoid"
+      )
+    );
 
-    const imgData = canvas.toDataURL("image/jpeg", 0.95);
+    // Build a set of "hard" y-positions (top of each block, in canvas px)
+    const hardTops = new Set<number>();
+    hardTops.add(0);
+    for (const el of blocks) {
+      const top = (el.getBoundingClientRect().top - sheetTop) * scale;
+      if (top > 0) hardTops.add(Math.round(top));
+    }
+    // Also add bottoms so we know safe cut lines
+    const cutPoints: number[] = [0];
+    for (const el of blocks) {
+      const rect = el.getBoundingClientRect();
+      cutPoints.push(Math.round((rect.bottom - sheetTop) * scale));
+    }
+    cutPoints.push(fullCanvas.height);
+    const sortedCuts = Array.from(new Set(cutPoints)).sort((a, b) => a - b);
 
-    if (imgH <= pageH) {
-      pdf.addImage(imgData, "JPEG", 0, 0, imgW, imgH);
-    } else {
-      // multi-page: slice canvas vertically
-      let remaining = imgH;
-      let position = 0;
-      while (remaining > 0) {
-        pdf.addImage(imgData, "JPEG", 0, position, imgW, imgH);
-        remaining -= pageH;
-        position -= pageH;
-        if (remaining > 0) pdf.addPage();
-      }
+    // Paginate: from currentTop, find the largest cut point <= currentTop + pageHpx
+    let currentTop = 0;
+    let first = true;
+    while (currentTop < fullCanvas.height) {
+      const maxBottom = currentTop + pageHpx;
+      let cut = sortedCuts.filter((c) => c > currentTop && c <= maxBottom).pop();
+      // If no natural cut fits (single block taller than page), hard-cut at page height
+      if (cut === undefined) cut = Math.min(maxBottom, fullCanvas.height);
+
+      const sliceH = cut - currentTop;
+      const slice = document.createElement("canvas");
+      slice.width = fullCanvas.width;
+      slice.height = sliceH;
+      const ctx = slice.getContext("2d")!;
+      ctx.fillStyle = "#faf7f1";
+      ctx.fillRect(0, 0, slice.width, slice.height);
+      ctx.drawImage(fullCanvas, 0, currentTop, fullCanvas.width, sliceH, 0, 0, fullCanvas.width, sliceH);
+
+      const imgData = slice.toDataURL("image/jpeg", 0.95);
+      const imgHmm = sliceH / pxPerMm;
+      if (!first) pdf.addPage();
+      pdf.addImage(imgData, "JPEG", 0, 0, pageWmm, imgHmm);
+      first = false;
+      currentTop = cut;
     }
 
     pdf.save(filename);
