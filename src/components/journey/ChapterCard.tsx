@@ -127,17 +127,6 @@ export default function ChapterCard({ exp, index, total }: {
         </AnimatePresence>
       </div>
 
-      {index === 0 && (
-        <div className="mt-10 flex justify-center">
-          <Link
-            to="/"
-            className="inline-flex items-center gap-2 rounded-full border-2 px-5 py-2.5 text-sm font-medium transition hover:bg-[var(--color-primary)] hover:text-[var(--color-primary-foreground)]"
-            style={{ borderColor: accent, color: accent }}
-          >
-            <ArrowLeft size={14} /> Back to the start
-          </Link>
-        </div>
-      )}
     </motion.article>
   );
 }
