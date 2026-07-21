@@ -115,6 +115,9 @@ export const experience: Experience[] = [
       "Performance Management and OKR Governance: Led end-to-end PMS cycles on Keka and institutionalized quarterly OKR frameworks across teams, driving goal alignment, structured reviews, and improved performance accountability.\n\nHR Business Partnering and Span Leadership: Acted as HRBP for 230+ employees in a 370-member organization, partnering with leadership to drive people strategy, resolve organizational challenges, and enable data-backed decision-making.\n\nCompetency Framework and Career Architecture: Designed and implemented a comprehensive skill and competency matrix across functions, enabling structured career pathing, clearer role expectations, and targeted development planning.\n\nEmployee Engagement and Experience Optimization: Led employee connect initiatives and redesigned eNPS and onboarding feedback mechanisms, generating actionable insights to enhance engagement and improve onboarding effectiveness.\n\nManagerial Effectiveness and Coaching Enablement: Developed and deployed manager best-practice playbooks, strengthening coaching capabilities and improving the effectiveness of the managerial layer.",
     tools: [
       { name: "Keka", logo: "https://logo.clearbit.com/keka.com", color: "#2A9D8F" },
+      { name: "Claude", logo: "https://logo.clearbit.com/anthropic.com", color: "#D97757" },
+      { name: "Google Antigravity", logo: "https://logo.clearbit.com/google.com", color: "#4285F4" },
+      { name: "GitHub", logo: "https://logo.clearbit.com/github.com", color: "#181717" },
     ],
   },
 ];
