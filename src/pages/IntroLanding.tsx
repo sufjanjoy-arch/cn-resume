@@ -65,9 +65,6 @@ export default function IntroLanding() {
             <span className="inline-flex items-center gap-1.5 rounded-full border border-border bg-card/60 px-3 py-1">
               <MapPin size={12} /> Bangalore, India
             </span>
-            <span className="rounded-full border border-border bg-card/60 px-3 py-1">
-              English & Hindi (fluent) · Malayalam (native) · Gujarati (conversational)
-            </span>
           </motion.div>
 
           <motion.p custom={4} variants={fadeUp} initial="hidden" animate="show"
