@@ -74,13 +74,12 @@ export default function JourneyPage() {
       <nav className="fixed bottom-0 left-0 right-0 z-20 border-t border-border/60 bg-background/85 backdrop-blur-md">
         <div className="mx-auto flex max-w-3xl items-center justify-between gap-3 px-5 py-3 md:px-10">
           <button
-            onClick={() => prev && navigate(`/journey/${prev.slug}`)}
-            disabled={!prev}
-            className="inline-flex items-center gap-2 rounded-full border border-border bg-card/70 px-4 py-2 text-sm font-medium transition hover:border-[var(--color-primary)] hover:text-[var(--color-primary)] disabled:opacity-30 disabled:hover:border-border disabled:hover:text-inherit"
+            onClick={() => prev ? navigate(`/journey/${prev.slug}`) : navigate("/")}
+            className="inline-flex items-center gap-2 rounded-full border border-border bg-card/70 px-4 py-2 text-sm font-medium transition hover:border-[var(--color-primary)] hover:text-[var(--color-primary)]"
           >
             <ArrowLeft size={14} />
             <span className="hidden sm:inline">{prev ? prev.company : "Start"}</span>
-            <span className="sm:hidden">Prev</span>
+            <span className="sm:hidden">{prev ? "Prev" : "Start"}</span>
           </button>
 
           <div className="flex items-center gap-2">
