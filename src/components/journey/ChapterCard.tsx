@@ -1,7 +1,6 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronDown, MapPin, Briefcase, Calendar, ArrowLeft } from "lucide-react";
+import { ChevronDown, MapPin, Briefcase, Calendar } from "lucide-react";
 import type { Experience } from "@/types/portfolio";
 import {
   tenureLabel, tenureDuration, employmentLabel, splitDescription,
@@ -127,17 +126,6 @@ export default function ChapterCard({ exp, index, total }: {
         </AnimatePresence>
       </div>
 
-      {index === 0 && (
-        <div className="mt-10 flex justify-center">
-          <Link
-            to="/"
-            className="inline-flex items-center gap-2 rounded-full border-2 px-5 py-2.5 text-sm font-medium transition hover:bg-[var(--color-primary)] hover:text-[var(--color-primary-foreground)]"
-            style={{ borderColor: accent, color: accent }}
-          >
-            <ArrowLeft size={14} /> Back to the start
-          </Link>
-        </div>
-      )}
     </motion.article>
   );
 }
