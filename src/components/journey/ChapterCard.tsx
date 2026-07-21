@@ -1,7 +1,6 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronDown, MapPin, Briefcase, Calendar, ArrowLeft } from "lucide-react";
+import { ChevronDown, MapPin, Briefcase, Calendar } from "lucide-react";
 import type { Experience } from "@/types/portfolio";
 import {
   tenureLabel, tenureDuration, employmentLabel, splitDescription,
