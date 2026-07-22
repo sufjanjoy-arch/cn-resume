@@ -9,7 +9,10 @@ export default function ResumePage() {
 
   return (
     <div className="resume-root min-h-screen bg-[#f5f0e8] py-8 print:py-0">
-      <div className="resume-sheet mx-auto grid h-[1120px] max-w-[794px] grid-cols-[245px_1fr] overflow-hidden bg-[#faf7f1] shadow-xl print:shadow-none">
+      <div
+  id="resume-sheet"
+  className="resume-sheet mx-auto grid h-[1120px] max-w-[794px] grid-cols-[245px_1fr] overflow-hidden bg-[#faf7f1] shadow-xl print:shadow-none"
+>
         <aside className="resume-sidebar bg-[#6f9279] px-7 py-7 text-white">
           <header className="resume-header">
             <h1 className="text-[31px] font-light leading-[0.98] tracking-tight">{personalInfo.name}</h1>
