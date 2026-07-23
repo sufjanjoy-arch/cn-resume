@@ -155,15 +155,21 @@ export default function WorkSection() {
                           </span>
                         </div>
                       </div>
-                      {job.current && (
-                        <span className="inline-flex shrink-0 items-center px-2.5 py-1 rounded-full text-tiny bg-[var(--color-primary)]/10 text-[var(--color-primary)] font-medium">
-                          Current
-                        </span>
-                      )}
-                    </div>
+                    {job.current && (
+                      <span className="inline-flex shrink-0 items-center px-2.5 py-1 rounded-full text-tiny bg-[var(--color-primary)]/10 text-[var(--color-primary)] font-medium">
+                        Current
+                      </span>
+                    )}
+                  </div>
 
-                    {/* Tool logos */}
-                    {job.tools && job.tools.length > 0 && (
+                  {job.story && (
+                    <div className="mb-5 whitespace-pre-line text-small leading-relaxed text-[var(--color-muted-foreground)]">
+                      {job.story}
+                    </div>
+                  )}
+
+                  {/* Tool logos */}
+                  {job.tools && job.tools.length > 0 && (
                       <div className="mb-5 pb-5 border-b border-[var(--color-border)]/60">
                         <div className="text-tiny uppercase tracking-wide text-[var(--color-muted-foreground)] mb-2">
                           Tools & Platforms
