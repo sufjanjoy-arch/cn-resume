@@ -163,10 +163,20 @@ export default function WorkSection() {
                   </div>
 
                   {job.story && (
-                    <div className="mb-5 whitespace-pre-line text-small leading-relaxed text-[var(--color-muted-foreground)]">
-                      {job.story}
-                    </div>
-                  )}
+  <div className="mb-5 space-y-4">
+    {job.story
+      .split("\n\n")
+      .filter(Boolean)
+      .map((paragraph, i) => (
+        <p
+          key={i}
+          className="text-small leading-relaxed text-[var(--color-muted-foreground)]"
+        >
+          {paragraph}
+        </p>
+      ))}
+  </div>
+)}
 
                   {/* Tool logos */}
                   {job.tools && job.tools.length > 0 && (
