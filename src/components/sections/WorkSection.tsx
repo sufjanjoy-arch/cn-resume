@@ -165,7 +165,7 @@ export default function WorkSection() {
                   {job.story && (
   <div className="mb-5 space-y-4">
     {job.story
-      .split("\n\n")
+      .split(/\n\s*\n/)
       .filter(Boolean)
       .map((paragraph, i) => (
         <p
