@@ -1,18 +1,51 @@
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import { ArrowLeft, Download, Loader2 } from "lucide-react";
 import { personalInfo, socialLinks, experience, education } from "@/data/portfolio-data";
 import { tenureLabel, employmentLabel, splitDescription } from "@/lib/experience-helpers";
+import { downloadResumePdf } from "@/lib/download-resume";
 
 export default function ResumePage() {
+  const [downloading, setDownloading] = useState(false);
   const linkedIn = socialLinks.find((s) => s.platform === "LinkedIn");
 
   // display roles reverse-chronological (most recent first) for résumé
   const roles = [...experience].reverse();
 
+  const handleDownload = async () => {
+    if (downloading) return;
+    setDownloading(true);
+    try {
+      await downloadResumePdf();
+    } finally {
+      setDownloading(false);
+    }
+  };
+
   return (
-    <div className="resume-root min-h-screen bg-[#f5f0e8] py-8 print:py-0">
+    <div className="resume-root min-h-screen bg-[#f5f0e8] py-6 sm:py-8 print:py-0">
+      {/* Action Bar for Screen view */}
+      <div className="mx-auto max-w-[794px] mb-4 px-4 flex items-center justify-between print:hidden">
+        <Link
+          to="/"
+          className="inline-flex items-center gap-2 text-xs sm:text-sm font-medium text-[#4a6b57] hover:text-[#2d4336] transition"
+        >
+          <ArrowLeft size={15} /> Back to Portfolio
+        </Link>
+        <button
+          onClick={handleDownload}
+          disabled={downloading}
+          className="inline-flex items-center gap-2 rounded-full bg-[#6f9279] px-4 py-2 text-xs font-semibold text-white shadow-xs hover:bg-[#5a7963] transition disabled:opacity-60"
+        >
+          {downloading ? <Loader2 size={14} className="animate-spin" /> : <Download size={14} />}
+          <span>{downloading ? "Preparing PDF…" : "Download PDF Résumé"}</span>
+        </button>
+      </div>
+
       <div
-  id="resume-sheet"
-  className="resume-sheet mx-auto grid h-[1120px] max-w-[794px] grid-cols-[245px_1fr] overflow-hidden bg-[#faf7f1] shadow-xl print:shadow-none"
->
+        id="resume-sheet"
+        className="resume-sheet mx-auto grid h-[1120px] max-w-[794px] grid-cols-[245px_1fr] overflow-hidden bg-[#faf7f1] shadow-xl print:shadow-none"
+      >
         <aside className="resume-sidebar bg-[#6f9279] px-7 py-7 text-white">
           <header className="resume-header">
             <h1 className="text-[31px] font-light leading-[0.98] tracking-tight">{personalInfo.name}</h1>
@@ -75,7 +108,7 @@ export default function ResumePage() {
         <main className="px-7 py-6 text-[#2d2d2d]">
           <Section title="Profile">
             <p className="text-[9.6px] leading-[1.38]">
-              HR Business Partner with 7.5+ years building and scaling people systems across high-growth startups. Currently at Finbox, driving performance management, OKR governance, competency frameworks, and employee relations for a 230+ employee span. Experienced in KPI-driven PMS, HRMS implementation, ESOP rollout communication, org design, and people analytics.
+              HR Business Partner with 8+ years building and scaling people systems across high-growth startups. Currently at Finbox, driving performance management, OKR governance, talent management, and employee listening for a 140+ employee span in a 410-member organization. Experienced in KPI-driven PMS, HRMS implementation, ESOP rollout communication, org design, and people analytics.
             </p>
           </Section>
 

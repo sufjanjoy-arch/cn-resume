@@ -36,10 +36,9 @@ const defaultSections: SectionData[] = [
 
 const AnimatedSections: React.FC<AnimatedSectionsProps> = ({
   sections = defaultSections,
-  className = "",
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const observerRef = useRef<any>(null);
+  const observerRef = useRef<unknown>(null);
   const timelineRef = useRef<gsap.core.Timeline | null>(null);
   const splitHeadingsRef = useRef<SplitText[]>([]);
   const currentIndexRef = useRef<number>(-1);

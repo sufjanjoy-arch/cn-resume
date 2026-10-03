@@ -1,4 +1,4 @@
-import type { Config } from "tailwindcss";
+import tailwindcssAnimate from "tailwindcss-animate";
 
 export default {
   darkMode: ["class"],
@@ -59,34 +59,28 @@ export default {
         sm: "var(--radius-sm)",
       },
       fontFamily: {
-        'sans': ['var(--font-body, Ranade)', 'system-ui', 'sans-serif'],
-        'display': ['var(--font-heading, Archivo)', 'system-ui', 'sans-serif'],
-        'serif': ['var(--font-heading, Archivo)', 'Georgia', 'serif'],
+        sans: ["'Plus Jakarta Sans'", "system-ui", "sans-serif"],
+        display: ["'Archivo'", "system-ui", "sans-serif"],
+        serif: ["'Archivo'", "Georgia", "serif"],
       },
       fontSize: {
-        // Hero title: 48-60px
         hero: ["3rem", { lineHeight: "1.2", fontWeight: "300" }],
         "hero-lg": ["3.75rem", { lineHeight: "1.2", fontWeight: "300" }],
-        // Section headings: 30-36px
         "section-heading": ["1.875rem", { lineHeight: "1.2", fontWeight: "600" }],
         "section-heading-lg": ["2.25rem", { lineHeight: "1.2", fontWeight: "600" }],
-        // Card titles: 20-24px
         "card-title": ["1.25rem", { lineHeight: "1.4", fontWeight: "600" }],
         "card-title-lg": ["1.5rem", { lineHeight: "1.4", fontWeight: "600" }],
-        // Subsection: 18px
         subsection: ["1.125rem", { lineHeight: "1.5", fontWeight: "500" }],
-        // Metadata: 14px
         metadata: ["0.875rem", { lineHeight: "1.5", fontWeight: "400" }],
       },
       spacing: {
-        // Custom spacing from specification
-        "4xl": "6rem", // 96px - Major section separation
-        "3xl": "4rem", // 64px - Section padding (desktop)
-        "2xl": "3rem", // 48px - Section padding (mobile)
+        "4xl": "6rem",
+        "3xl": "4rem",
+        "2xl": "3rem",
       },
       maxWidth: {
-        "reading": "48rem", // 768px - Optimal reading width
-        "content": "80rem", // 1280px - Max content width
+        reading: "48rem",
+        content: "80rem",
       },
       keyframes: {
         "accordion-down": {
@@ -127,5 +121,5 @@ export default {
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [tailwindcssAnimate],
 } satisfies Config;

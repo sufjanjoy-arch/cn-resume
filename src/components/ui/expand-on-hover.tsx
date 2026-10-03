@@ -44,8 +44,10 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import React, { useState } from "react";
-// Note: swiper was originally imported here for CSS side-effects only;
-// this component uses framer-motion exclusively, so the imports were removed.
+import "swiper/css";
+import "swiper/css/effect-creative";
+import "swiper/css/pagination";
+import "swiper/css/autoplay";
 
 import { cn } from "@/lib/utils";
 

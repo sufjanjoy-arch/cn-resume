@@ -50,8 +50,8 @@
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
-    font-family: var(--font-body, Ranade), -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    font-weight: var(--font-body-weight, 400);
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-weight: 400;
     font-size: var(--text-body);
     line-height: var(--text-body--line-height);
     -webkit-font-smoothing: antialiased;
@@ -59,12 +59,13 @@
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-family: var(--font-heading, Archivo), -apple-system, BlinkMacSystemFont, sans-serif;
-    font-weight: var(--font-heading-weight, 600);
+    font-family: 'Archivo', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-weight: 600;
+    letter-spacing: -0.02em;
   }
 
   a, button, input, label {
-    font-family: var(--font-heading, Archivo), -apple-system, BlinkMacSystemFont, sans-serif;
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
   }
 
   html {
