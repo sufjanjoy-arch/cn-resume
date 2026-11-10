@@ -186,7 +186,7 @@ export const experience: Experience[] = [
       "HR Business Partnering and Span Leadership: Acted as HRBP for 140+ employees in a 410-member organization, partnering with leadership to drive people strategy, resolve organizational challenges, and enable data-backed decision-making.\n\nPeople Analytics and Employee Listening: Conceptualized and built an employee-connect analytics application on my own using Google Antigravity, converting employee-connect data into actionable insights on sentiment, people pulse, recurring themes, and organizational hotspots to support data-driven leadership decisions.\n\nPerformance Management and OKR Governance: Led end-to-end PMS cycles on Keka and institutionalized quarterly OKR frameworks across teams, driving goal alignment, structured reviews, and improved performance accountability.\n\nTalent Management: Partnered with leadership to identify high-potential talent, critical roles, and development priorities, supporting promotion, succession, and retention decisions.\n\nManagerial Effectiveness and Coaching Enablement: Developed and deployed manager best-practice playbooks, strengthening coaching capabilities and improving the effectiveness of the managerial layer.",
     tools: [
       { name: "Google Antigravity", logo: "", color: "#4285F4" },
-      { name: "Keka", logo: "", color: "#2A9D8F" },
+      { name: "Keka", logo: "", color: "#5412AE" },
       { name: "Claude", logo: "", color: "#D97757" },
       { name: "GitHub", logo: "", color: "#181717" },
     ],
@@ -225,7 +225,6 @@ export interface HobbiesAndInterests {
   movies: {
     title: string;
     description: string;
-    imdbUrl?: string;
     genres: string[];
   };
   travel: {
@@ -249,14 +248,14 @@ export const hobbiesData: HobbiesAndInterests = {
   movies: {
     title: "Cinema & Filmography",
     description: "Avid film enthusiast with a keen eye for storytelling, cinematography, direction, and character dynamics across world cinema.",
-    imdbUrl: "https://www.imdb.com",
     genres: ["World Cinema", "Psychological Thrillers", "Sci-Fi & Speculative", "Character Dramas", "Docuseries"],
   },
   travel: {
     title: "Travel & Wandering",
     description: "Curious explorer fascinated by diverse cultures, architectural history, coastal landscapes, and global cuisines.",
     countriesVisited: [
-      "India", "United Arab Emirates", "Singapore", "Thailand", "Malaysia", "Indonesia"
+      "Kenya", "Vietnam", "Ghana", "Qatar", "Italy", "Switzerland",
+      "Norway", "Denmark", "The Vatican City", "Japan", "Singapore",
     ],
   },
   reading: {

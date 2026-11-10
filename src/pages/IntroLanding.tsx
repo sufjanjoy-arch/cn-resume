@@ -2,9 +2,10 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { 
-  ArrowRight, Mail, Linkedin, Download, MapPin, Loader2, 
+  ArrowRight, Mail, Download, MapPin, Loader2, 
   Sparkles, FileText, ChevronDown, CheckCircle2 
 } from "lucide-react";
+import { LinkedInLogo } from "@/components/icons/ToolLogos";
 import { personalInfo, socialLinks, shortIntro } from "@/data/portfolio-data";
 import { downloadResumePdf } from "@/lib/download-resume";
 import ExecutiveOverview from "@/components/sections/ExecutiveOverview";
@@ -213,10 +214,10 @@ export default function IntroLanding() {
               href={linkedIn.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-border/80 bg-card/80 hover:border-[var(--color-primary)] hover:text-[var(--color-primary)] transition shadow-2xs"
+              className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-border/80 bg-card/80 hover:border-[#0A66C2] transition shadow-2xs group"
               aria-label="LinkedIn"
             >
-              <Linkedin size={16} />
+              <LinkedInLogo size={18} className="rounded-xs transition-transform group-hover:scale-110" />
             </a>
           )}
           <a

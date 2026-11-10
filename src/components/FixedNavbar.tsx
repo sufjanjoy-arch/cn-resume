@@ -1,5 +1,6 @@
 import { personalInfo, socialLinks } from "@/data/portfolio-data";
-import { Mail, Linkedin, Download, Loader2 } from "lucide-react";
+import { Mail, Download, Loader2 } from "lucide-react";
+import { LinkedInLogo } from "@/components/icons/ToolLogos";
 import { useState, useEffect } from "react";
 import { downloadResumePdf } from "@/lib/download-resume";
 
@@ -76,10 +77,10 @@ export default function FixedNavbar() {
               href={linkedIn.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-center w-[44px] h-[44px] hover:text-[var(--color-primary)] transition-colors"
+              className="flex items-center justify-center w-[44px] h-[44px] hover:opacity-80 transition-opacity"
               aria-label="LinkedIn"
             >
-              <Linkedin size={16} />
+              <LinkedInLogo size={18} />
             </a>
           )}
         </div>

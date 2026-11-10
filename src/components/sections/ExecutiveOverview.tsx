@@ -5,7 +5,7 @@ import {
   Building2, Calendar, MapPin, Briefcase, ArrowUpRight, 
   Sparkles, CheckCircle2, ChevronDown, ChevronUp, Layers, 
   Code2, Cpu, BarChart3, Users, Film, Compass, BookOpen, 
-  Headphones, Heart, ExternalLink
+  Headphones, Heart
 } from "lucide-react";
 import { 
   experience, categorizedSkills, keyInitiatives, education, hobbiesData 
@@ -383,16 +383,6 @@ export default function ExecutiveOverview() {
                     <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-[var(--color-primary)]">
                       <Film size={14} /> {hobbiesData.movies.title}
                     </span>
-                    {hobbiesData.movies.imdbUrl && (
-                      <a
-                        href={hobbiesData.movies.imdbUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1 text-[11px] font-medium text-muted-foreground hover:text-[var(--color-primary)] transition"
-                      >
-                        IMDb <ExternalLink size={11} />
-                      </a>
-                    )}
                   </div>
                   <p className="text-xs leading-relaxed text-foreground/85 mb-4">
                     {hobbiesData.movies.description}
@@ -419,7 +409,9 @@ export default function ExecutiveOverview() {
                     <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-[var(--color-primary)]">
                       <Compass size={14} /> {hobbiesData.travel.title}
                     </span>
-                    <span className="text-[10px] text-muted-foreground uppercase font-medium">Passport</span>
+                    <span className="text-[10px] text-muted-foreground uppercase font-medium">
+                      {hobbiesData.travel.countriesVisited.length} Countries
+                    </span>
                   </div>
                   <p className="text-xs leading-relaxed text-foreground/85 mb-4">
                     {hobbiesData.travel.description}
